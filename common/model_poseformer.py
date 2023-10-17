@@ -71,8 +71,8 @@ class FreqMlp(nn.Module):
                 f = interp1d(np.linspace(0, 1, x_low.shape[-1]), x_low_np[i, j, :], kind='linear')
                 x_interp_np[i, j, :] = f(np.linspace(0, 1, x.shape[-1]))
 
-        # Convert the result back to PyTorch tensor
-        x_low = torch.tensor(x_interp_np).float()
+        # Convert the result back to PyTorch tensor and move to the same device as `x`
+        x_low = torch.tensor(x_interp_np).float().to(x.device)
 
         # print(f"Before: x_low={x_low.shape}, x={x.shape}")
 

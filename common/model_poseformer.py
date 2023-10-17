@@ -16,6 +16,7 @@ from timm.models.helpers import load_pretrained
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from timm.models.registry import register_model
 
+import pywt  # 导入PyWavelets库
 
 class Mlp(nn.Module):
     def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
@@ -28,12 +29,43 @@ class Mlp(nn.Module):
         self.drop = nn.Dropout(drop)
 
     def forward(self, x):
-        x = self.fc1(x)
-        x = self.act(x)
-        x = self.drop(x)
-        x = self.fc2(x)
-        x = self.drop(x)
-        return x
+        b, f, _ = x.shape
+        # 使用小波变换替换DCT
+        coeffs = pywt.dwt(x.cpu().numpy(), 'haar')  # 使用'haar'小波，也可以选择其他小波
+        x_low, x_high = coeffs  # 解包低频和高频组件
+        x_low = torch.tensor(x_low).to(x.device).float()  # 转换为张量并移动到原始设备上
+
+        # 执行原始的MLP操作
+        x_low = self.fc1(x_low)
+        x_low = self.act(x_low)
+        x_low = self.drop(x_low)
+        x_low = self.fc2(x_low)
+        x_low = self.drop(x_low)
+
+        # 使用逆小波变换
+        x_reconstructed = pywt.idwt(x_low.cpu().detach().numpy(), None, 'haar')  # 这里我们仅使用低频组件
+        x_reconstructed = torch.tensor(x_reconstructed).to(x.device).float()
+
+        return x_reconstructed
+
+
+# class Mlp(nn.Module):
+#     def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
+#         super().__init__()
+#         out_features = out_features or in_features
+#         hidden_features = hidden_features or in_features
+#         self.fc1 = nn.Linear(in_features, hidden_features)
+#         self.act = act_layer()
+#         self.fc2 = nn.Linear(hidden_features, out_features)
+#         self.drop = nn.Dropout(drop)
+#
+#     def forward(self, x):
+#         x = self.fc1(x)
+#         x = self.act(x)
+#         x = self.drop(x)
+#         x = self.fc2(x)
+#         x = self.drop(x)
+#         return x
 
 
 class FreqMlp(nn.Module):

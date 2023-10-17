@@ -55,7 +55,7 @@ class FreqMlp(nn.Module):
         b, f, _ = x.shape
 
         # Use wavelet transform to replace DCT
-        coeffs = pywt.dwt(x.detach().numpy(), 'haar')  # Using 'haar' wavelet, other wavelets can also be chosen
+        coeffs = pywt.dwt(x.cpu().detach().numpy(), 'haar')  # Using 'haar' wavelet, other wavelets can also be chosen
         x_low, x_high = coeffs  # Unpack low-frequency and high-frequency components
         x_low = torch.tensor(x_low).to(x.device).float()  # Convert to tensor and move to the original device
 

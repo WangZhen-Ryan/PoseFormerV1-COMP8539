@@ -54,52 +54,47 @@ class FreqMlp(nn.Module):
     def forward(self, x):
         b, f, _ = x.shape
 
-        # 使用小波变换替换DCT
-        coeffs = pywt.dwt(x.detach().numpy(), 'haar')  # 使用'haar'小波，也可以选择其他小波
-        x_low, x_high = coeffs  # 解包低频和高频组件
-        x_low = torch.tensor(x_low).to(x.device).float()  # 转换为张量并移动到原始设备上
+        # Use wavelet transform to replace DCT
+        coeffs = pywt.dwt(x.detach().numpy(), 'haar')  # Using 'haar' wavelet, other wavelets can also be chosen
+        x_low, x_high = coeffs  # Unpack low-frequency and high-frequency components
+        x_low = torch.tensor(x_low).to(x.device).float()  # Convert to tensor and move to the original device
 
-        # 将其转换为NumPy数组
+        # Convert it to NumPy array
         x_low_np = x_low.detach().numpy()
 
-        # 初始化一个与目标尺寸相同的空数组
+        # Initialize an empty array with the target size
         x_interp_np = np.zeros(x.shape)
 
-        # 进行插值
+        # Perform interpolation
         for i in range(x_low_np.shape[0]):
             for j in range(x_low_np.shape[1]):
                 f = interp1d(np.linspace(0, 1, x_low.shape[-1]), x_low_np[i, j, :], kind='linear')
                 x_interp_np[i, j, :] = f(np.linspace(0, 1, x.shape[-1]))
 
-        # 将结果转换回PyTorch张量
+        # Convert the result back to PyTorch tensor
         x_low = torch.tensor(x_interp_np).float()
 
-        print(f"Before: x_low={x_low.shape}, x={x.shape}")
+        # print(f"Before: x_low={x_low.shape}, x={x.shape}")
 
-        x = self.fc1(x)
-        x = self.act(x)
-        x = self.drop(x)
-        x = self.fc2(x)
-        x = self.drop(x)
-
-        # 执行原始的MLP操作
+        # Perform the original MLP operations
         x_low = self.fc1(x_low)
         x_low = self.act(x_low)
         x_low = self.drop(x_low)
         x_low = self.fc2(x_low)
         x_low = self.drop(x_low)
 
-        print(f"Mid: x_low={x_low.shape}, x={x.shape}")
+        # print(f"Mid: x_low={x_low.shape}, x={x.shape}")
 
-        # 使用逆小波变换
-        x_reconstructed = pywt.idwt(x_low.cpu().detach().numpy(), None, 'haar')  # 这里我们仅使用低频组件
+        # Use inverse wavelet transform
+        x_reconstructed = pywt.idwt(x_low.cpu().detach().numpy(), None,
+                                    'haar')  # Here we only use the low-frequency component
         x_reconstructed = torch.tensor(x_reconstructed).to(x.device).float()
 
-        # 调整尺寸以与原始 x 一致
+        # Adjust size to be consistent with original x
         if x_reconstructed.shape[-1] > x.shape[-1]:
             x_reconstructed = x_reconstructed[..., :x.shape[-1]]
 
-        print(f"After: x_reconstructed={x_reconstructed.shape}, x={x.shape}")
+        # print(f"After: x_reconstructed={x_reconstructed.shape}, x={x.shape}")
 
         return x_reconstructed
 

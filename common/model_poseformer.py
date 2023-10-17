@@ -18,7 +18,7 @@ from timm.models.helpers import load_pretrained
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from timm.models.registry import register_model
 
-import pywt  # 导入PyWavelets库
+import pywt
 
 
 class Mlp(nn.Module):

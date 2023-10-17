@@ -60,7 +60,7 @@ class FreqMlp(nn.Module):
         x_low = torch.tensor(x_low).to(x.device).float()  # Convert to tensor and move to the original device
 
         # Convert it to NumPy array
-        x_low_np = x_low.detach().numpy()
+        x_low_np = x_low.cpu().detach().numpy()
 
         # Initialize an empty array with the target size
         x_interp_np = np.zeros(x.shape)

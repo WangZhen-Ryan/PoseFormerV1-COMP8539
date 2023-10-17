@@ -2,9 +2,11 @@
 
 import math
 import logging
+import numpy as np
 from functools import partial
 from collections import OrderedDict
 from einops import rearrange, repeat
+from scipy.interpolate import interp1d
 
 import torch
 import torch.nn as nn
@@ -18,6 +20,7 @@ from timm.models.registry import register_model
 
 import pywt  # 导入PyWavelets库
 
+
 class Mlp(nn.Module):
     def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
         super().__init__()
@@ -29,11 +32,55 @@ class Mlp(nn.Module):
         self.drop = nn.Dropout(drop)
 
     def forward(self, x):
+        x = self.fc1(x)
+        x = self.act(x)
+        x = self.drop(x)
+        x = self.fc2(x)
+        x = self.drop(x)
+        return x
+
+
+class FreqMlp(nn.Module):
+    def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
+        super().__init__()
+        out_features = out_features or in_features
+        hidden_features = hidden_features or in_features
+
+        self.fc1 = nn.Linear(in_features, hidden_features)
+        self.act = act_layer()
+        self.fc2 = nn.Linear(hidden_features, out_features)
+        self.drop = nn.Dropout(drop)
+
+    def forward(self, x):
         b, f, _ = x.shape
+
         # 使用小波变换替换DCT
-        coeffs = pywt.dwt(x.cpu().numpy(), 'haar')  # 使用'haar'小波，也可以选择其他小波
+        coeffs = pywt.dwt(x.detach().numpy(), 'haar')  # 使用'haar'小波，也可以选择其他小波
         x_low, x_high = coeffs  # 解包低频和高频组件
         x_low = torch.tensor(x_low).to(x.device).float()  # 转换为张量并移动到原始设备上
+
+        # 将其转换为NumPy数组
+        x_low_np = x_low.detach().numpy()
+
+        # 初始化一个与目标尺寸相同的空数组
+        x_interp_np = np.zeros(x.shape)
+
+        # 进行插值
+        for i in range(x_low_np.shape[0]):
+            for j in range(x_low_np.shape[1]):
+                f = interp1d(np.linspace(0, 1, x_low.shape[-1]), x_low_np[i, j, :], kind='linear')
+                x_interp_np[i, j, :] = f(np.linspace(0, 1, x.shape[-1]))
+
+        # 将结果转换回PyTorch张量
+        x_low = torch.tensor(x_interp_np).float()
+
+        print(f"Before: x_low={x_low.shape}, x={x.shape}")
+
+        x = self.fc1(x)
+        x = self.act(x)
+        x = self.drop(x)
+        x = self.fc2(x)
+        x = self.drop(x)
 
         # 执行原始的MLP操作
         x_low = self.fc1(x_low)
@@ -42,14 +89,22 @@ class Mlp(nn.Module):
         x_low = self.fc2(x_low)
         x_low = self.drop(x_low)
 
+        print(f"Mid: x_low={x_low.shape}, x={x.shape}")
+
         # 使用逆小波变换
         x_reconstructed = pywt.idwt(x_low.cpu().detach().numpy(), None, 'haar')  # 这里我们仅使用低频组件
         x_reconstructed = torch.tensor(x_reconstructed).to(x.device).float()
 
+        # 调整尺寸以与原始 x 一致
+        if x_reconstructed.shape[-1] > x.shape[-1]:
+            x_reconstructed = x_reconstructed[..., :x.shape[-1]]
+
+        print(f"After: x_reconstructed={x_reconstructed.shape}, x={x.shape}")
+
         return x_reconstructed
 
 
-# class Mlp(nn.Module):
+# class FreqMlp(nn.Module):
 #     def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
 #         super().__init__()
 #         out_features = out_features or in_features
@@ -60,34 +115,15 @@ class Mlp(nn.Module):
 #         self.drop = nn.Dropout(drop)
 #
 #     def forward(self, x):
+#         b, f, _ = x.shape
+#         x = dct.dct(x.permute(0, 2, 1)).permute(0, 2, 1).contiguous()
 #         x = self.fc1(x)
 #         x = self.act(x)
 #         x = self.drop(x)
 #         x = self.fc2(x)
 #         x = self.drop(x)
+#         x = dct.idct(x.permute(0, 2, 1)).permute(0, 2, 1).contiguous()
 #         return x
-
-
-class FreqMlp(nn.Module):
-    def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
-        super().__init__()
-        out_features = out_features or in_features
-        hidden_features = hidden_features or in_features
-        self.fc1 = nn.Linear(in_features, hidden_features)
-        self.act = act_layer()
-        self.fc2 = nn.Linear(hidden_features, out_features)
-        self.drop = nn.Dropout(drop)
-
-    def forward(self, x):
-        b, f, _ = x.shape
-        x = dct.dct(x.permute(0, 2, 1)).permute(0, 2, 1).contiguous()
-        x = self.fc1(x)
-        x = self.act(x)
-        x = self.drop(x)
-        x = self.fc2(x)
-        x = self.drop(x)
-        x = dct.idct(x.permute(0, 2, 1)).permute(0, 2, 1).contiguous()
-        return x
 
 
 # class Attention(nn.Module):

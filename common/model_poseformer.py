@@ -58,111 +58,52 @@ class FreqMlp(nn.Module):
 
     def forward(self, x):
         b, f, _ = x.shape
+        # print("----------------------------------------------------------------------------------------------")
+        # print("x.shape: ", x.shape)
 
         # Reshape x to fit the expected input shape for DWTForward
         x_reshaped = x.unsqueeze(1)  # Shape: [batch, 1, features, length]
+        # print("x_reshaped.shape: ", x_reshaped.shape)
 
         # Use wavelet transform to replace DCT
         coeffs = self.dwt(x_reshaped)
-        x_low = coeffs[0].squeeze(1)  # remove the singleton channel dimension
-        x_high = coeffs[1][0].squeeze(1)  # remove the singleton channel dimension
+        # print("coeffs's length: ", len(coeffs))
 
-        # Convert it to NumPy array
-        x_low_np = x_low.cpu().detach().numpy()
+        x_low, x_high = coeffs
+        # print("x_low.shape: 1", x_low.shape)
 
-        # Initialize an empty array with the target size
-        x_interp_np = np.zeros((b, f, x.shape[2]))  # Adjusted to use shape variables
+        original_2 = x_low.shape[2]
+        original_3 = x_low.shape[3]
 
-        # Perform interpolation
-        for i in range(b):
-            for j in range(f):
-                f_interp = interp1d(np.linspace(0, 1, x_low.shape[-1]), x_low_np[i, j, :], kind='linear')
-                x_interp_np[i, j, :] = f_interp(np.linspace(0, 1, x.shape[-1]))
-
-        # Convert the result back to PyTorch tensor and move to the same device as `x`
-        x_low_interp = torch.tensor(x_interp_np).float().to(x.device)
-
-        # Perform interpolation
-        for i in range(x_low_np.shape[0]):
-            for j in range(x_low_np.shape[1]):
-                f = interp1d(np.linspace(0, 1, x_low[0].shape[-1]), x_low_np[i, j, :], kind='linear')
-                x_interp_np[i, j, :] = f(np.linspace(0, 1, x.shape[-1]))
-
-        # Convert the result back to PyTorch tensor and move to the same device as `x`
-        x_low[0] = torch.tensor(x_interp_np).float().to(x.device)
+        x_low = F.interpolate(x_low, size=(x_reshaped.shape[2], x_reshaped.shape[3]), mode='bilinear', align_corners=True)
+        # print("x_low.shape: 2", x_low.shape)
 
         # Perform the original MLP operations
-        x_low[0] = self.fc1(x_low[0])
-        x_low[0] = self.act(x_low[0])
-        x_low[0] = self.drop(x_low[0])
-        x_low[0] = self.fc2(x_low[0])
-        x_low[0] = self.drop(x_low[0])
+        x_low = self.fc1(x_low)
+        x_low = self.act(x_low)
+        x_low = self.drop(x_low)
+        x_low = self.fc2(x_low)
+        x_low = self.drop(x_low)
 
-        # Reshape x_low back to [batch, features, length]
-        x_low = x_low.squeeze(3)
+        x_low = F.interpolate(x_low, size=(original_2, original_3), mode='bilinear', align_corners=True)
+        # print("x_low.shape: 3", x_low.shape)
 
         # Use inverse wavelet transform
-        x_reconstructed = self.idwt((x_low.unsqueeze(3), [x_high.unsqueeze(3)]))
-        x_reconstructed = torch.tensor(x_reconstructed).to(x.device).float()
+        x_reconstructed = self.idwt((x_low, x_high))
+        # print("x_reconstructed.shape: 1", x_reconstructed.shape)
 
         # Remove the singleton dimension and adjust shape
         x_reconstructed = x_reconstructed.squeeze(1)
+        # print("x_reconstructed.shape: 2", x_reconstructed.shape)
+
+        x_reconstructed = x_reconstructed[:, :-1, :]
+        # print("x_reconstructed.shape: 3", x_reconstructed.shape)
 
         # # Adjust size to be consistent with original x
         # if x_reconstructed.shape[-1] > x.shape[-1]:
         #     x_reconstructed = x_reconstructed[..., :x.shape[-1]]
 
         return x_reconstructed
-
-
-# class FreqMlp(nn.Module):
-#     def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
-#         super().__init__()
-#         out_features = out_features or in_features
-#         hidden_features = hidden_features or in_features
-#         self.fc1 = nn.Linear(in_features, hidden_features)
-#         self.act = act_layer()
-#         self.fc2 = nn.Linear(hidden_features, out_features)
-#         self.drop = nn.Dropout(drop)
-#
-#     def forward(self, x):
-#         b, f, _ = x.shape
-#         x = dct.dct(x.permute(0, 2, 1)).permute(0, 2, 1).contiguous()
-#         x = self.fc1(x)
-#         x = self.act(x)
-#         x = self.drop(x)
-#         x = self.fc2(x)
-#         x = self.drop(x)
-#         x = dct.idct(x.permute(0, 2, 1)).permute(0, 2, 1).contiguous()
-#         return x
-
-
-# class Attention(nn.Module):
-#     def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0.):
-#         super().__init__()
-#         self.num_heads = num_heads
-#         head_dim = dim // num_heads
-#         # NOTE scale factor was wrong in my original version, can set manually to be compat with prev weights
-#         self.scale = qk_scale or head_dim ** -0.5
-#
-#         self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
-#         self.attn_drop = nn.Dropout(attn_drop)
-#         self.proj = nn.Linear(dim, dim)
-#         self.proj_drop = nn.Dropout(proj_drop)
-#
-#     def forward(self, x):
-#         B, N, C = x.shape
-#         qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
-#         q, k, v = qkv[0], qkv[1], qkv[2]   # make torchscript happy (cannot use tensor as tuple)
-#
-#         attn = (q @ k.transpose(-2, -1)) * self.scale
-#         attn = attn.softmax(dim=-1)
-#         attn = self.attn_drop(attn)
-#
-#         x = (attn @ v).transpose(1, 2).reshape(B, N, C)
-#         x = self.proj(x)
-#         x = self.proj_drop(x)
-#         return x
 
 
 class Attention(nn.Module):
@@ -327,4 +268,3 @@ class PoseTransformer(nn.Module):
         x = x.view(b, 1, p, -1)
 
         return x
-

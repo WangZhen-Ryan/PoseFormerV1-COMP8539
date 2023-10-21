@@ -2,19 +2,24 @@
 
 import math
 import logging
+import numpy as np
 from functools import partial
 from collections import OrderedDict
 from einops import rearrange, repeat
+from scipy.interpolate import interp1d
 
 import torch
 import torch.nn as nn
 import torch_dct as dct
 import torch.nn.functional as F
+from pytorch_wavelets import DWTForward, DWTInverse
 
 from timm.data import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.models.helpers import load_pretrained
 from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from timm.models.registry import register_model
+
+import pywt
 
 
 class Mlp(nn.Module):
@@ -41,115 +46,65 @@ class FreqMlp(nn.Module):
         super().__init__()
         out_features = out_features or in_features
         hidden_features = hidden_features or in_features
+
         self.fc1 = nn.Linear(in_features, hidden_features)
         self.act = act_layer()
         self.fc2 = nn.Linear(hidden_features, out_features)
         self.drop = nn.Dropout(drop)
 
+        # Initialize wavelet transforms
+        self.dwt = DWTForward(J=1, wave='haar')
+        self.idwt = DWTInverse(wave='haar')
+
     def forward(self, x):
         b, f, _ = x.shape
-        x = dct.dct(x.permute(0, 2, 1)).permute(0, 2, 1).contiguous()
-        x = self.fc1(x)
-        x = self.act(x)
-        x = self.drop(x)
-        x = self.fc2(x)
-        x = self.drop(x)
-        x = dct.idct(x.permute(0, 2, 1)).permute(0, 2, 1).contiguous()
-        return x
+        # print("----------------------------------------------------------------------------------------------")
+        # print("x.shape: ", x.shape)
 
+        # Reshape x to fit the expected input shape for DWTForward
+        x_reshaped = x.unsqueeze(1)  # Shape: [batch, 1, features, length]
+        # print("x_reshaped.shape: ", x_reshaped.shape)
 
-# class Attention(nn.Module):
-#     def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0.):
-#         super().__init__()
-#         self.num_heads = num_heads
-#         head_dim = dim // num_heads
-#         # NOTE scale factor was wrong in my original version, can set manually to be compat with prev weights
-#         self.scale = qk_scale or head_dim ** -0.5
-#
-#         self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
-#         self.attn_drop = nn.Dropout(attn_drop)
-#         self.proj = nn.Linear(dim, dim)
-#         self.proj_drop = nn.Dropout(proj_drop)
-#
-#     def forward(self, x):
-#         B, N, C = x.shape
-#         qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
-#         q, k, v = qkv[0], qkv[1], qkv[2]   # make torchscript happy (cannot use tensor as tuple)
-#
-#         attn = (q @ k.transpose(-2, -1)) * self.scale
-#         attn = attn.softmax(dim=-1)
-#         attn = self.attn_drop(attn)
-#
-#         x = (attn @ v).transpose(1, 2).reshape(B, N, C)
-#         x = self.proj(x)
-#         x = self.proj_drop(x)
-#         return x
-class TemporalAttention(nn.Module):
-    def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0.):
-        super(TemporalAttention, self).__init__()
+        # Use wavelet transform to replace DCT
+        coeffs = self.dwt(x_reshaped)
+        # print("coeffs's length: ", len(coeffs))
 
-        # Key projection
-        self.key = nn.Linear(dim, dim, bias=qkv_bias)
+        x_low, x_high = coeffs
+        # print("x_low.shape: 1", x_low.shape)
 
-        # Global query vector
-        self.query = nn.Parameter(torch.randn(dim, 1))
+        original_2 = x_low.shape[2]
+        original_3 = x_low.shape[3]
 
-        # Dropout
-        self.attn_drop = nn.Dropout(attn_drop)
+        x_low = F.interpolate(x_low, size=(x_reshaped.shape[2], x_reshaped.shape[3]), mode='bilinear', align_corners=True)
+        # print("x_low.shape: 2", x_low.shape)
 
-    def forward(self, x):
-        # Shape: [b, f, emb_dim]
+        # Perform the original MLP operations
+        x_low = self.fc1(x_low)
+        x_low = self.act(x_low)
+        x_low = self.drop(x_low)
+        x_low = self.fc2(x_low)
+        x_low = self.drop(x_low)
 
-        # Projecting the input to obtain keys
-        k = self.key(x)  # Shape: [b, f, emb_dim]
+        x_low = F.interpolate(x_low, size=(original_2, original_3), mode='bilinear', align_corners=True)
+        # print("x_low.shape: 3", x_low.shape)
 
-        # Calculating attention scores
-        attn_scores = torch.matmul(k, self.query)  # Shape: [b, f, 1]
+        # Use inverse wavelet transform
+        x_reconstructed = self.idwt((x_low, x_high))
+        # print("x_reconstructed.shape: 1", x_reconstructed.shape)
 
-        # Applying softmax to get attention weights
-        attn_weights = F.softmax(attn_scores, dim=1)  # Shape: [b, f, 1]
-        attn_weights = self.attn_drop(attn_weights)
+        # Remove the singleton dimension and adjust shape
+        x_reconstructed = x_reconstructed.squeeze(1)
+        # print("x_reconstructed.shape: 2", x_reconstructed.shape)
 
-        # Weighted sum of the frames using the attention scores
-        x = torch.bmm(attn_weights.transpose(1, 2), x)  # Shape: [b, 1, emb_dim]
+        x_reconstructed = x_reconstructed[:, :-1, :]
+        # print("x_reconstructed.shape: 3", x_reconstructed.shape)
 
-        return x.squeeze(1)  # Shape: [b, emb_dim]
+        # # Adjust size to be consistent with original x
+        # if x_reconstructed.shape[-1] > x.shape[-1]:
+        #     x_reconstructed = x_reconstructed[..., :x.shape[-1]]
 
+        return x_reconstructed
 
-class SparseAttention(nn.Module):
-    def __init__(self, dim, num_heads=16, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0., stride=4):
-        super().__init__()
-        self.num_heads = num_heads
-        self.stride = stride
-        head_dim = dim // num_heads
-
-        self.q_linear = nn.Linear(dim, dim, bias=qkv_bias)
-        self.k_linear = nn.Linear(dim, dim, bias=qkv_bias)
-        self.v_linear = nn.Linear(dim, dim, bias=qkv_bias)
-
-        self.attn_drop = nn.Dropout(attn_drop)
-        self.proj = nn.Linear(dim, dim)
-        self.proj_drop = nn.Dropout(proj_drop)
-
-    def forward(self, x):
-        B, N, C = x.shape
-        q = self.q_linear(x)
-        k = self.k_linear(x[:, ::self.stride])  # Strided attention
-        v = self.v_linear(x[:, ::self.stride])  # Strided attention
-
-        # Compute attention score
-        attn_score = F.relu(q.unsqueeze(2) + k.unsqueeze(1))  # Shape: [B, N, N/stride, C]
-
-        # Compute attention weights
-        attn = F.softmax(attn_score.sum(dim=-1), dim=-1)  # Summing over the last dimension to get shape [B, N, N/stride]
-        attn = self.attn_drop(attn)
-
-        # Compute output
-        x = (attn.unsqueeze(-1) * v.unsqueeze(1)).sum(dim=2)  # Shape: [B, N, C]
-        x = self.proj(x)
-        x = self.proj_drop(x)
-
-        return x
 
 class Attention(nn.Module):
     def __init__(self, dim, num_heads=16, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0.):
@@ -192,10 +147,7 @@ class Block(nn.Module):
                  drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm):
         super().__init__()
         self.norm1 = norm_layer(dim)
-        # self.attn = Attention(
-        #     dim, num_heads=num_heads, qkv_bias=qkv_bias, qk_scale=qk_scale, attn_drop=attn_drop, proj_drop=drop)
-
-        self.attn = SparseAttention(
+        self.attn = Attention(
             dim, num_heads=num_heads, qkv_bias=qkv_bias, qk_scale=qk_scale, attn_drop=attn_drop, proj_drop=drop)
 
         # NOTE: drop path for stochastic depth, we shall see if this is better than dropout here
@@ -242,10 +194,7 @@ class PoseTransformer(nn.Module):
         ### spatial patch embedding
         self.Spatial_patch_to_embedding = nn.Linear(in_chans, embed_dim_ratio)
         self.Spatial_pos_embed = nn.Parameter(torch.zeros(1, num_joints, embed_dim_ratio))
-        ### temporal attention
-        self.temporal_attn = TemporalAttention(embed_dim, num_heads=num_heads, qkv_bias=qkv_bias,
-                                               attn_drop=attn_drop_rate)
-        
+
         self.Temporal_pos_embed = nn.Parameter(torch.zeros(1, num_frame, embed_dim))
         self.pos_drop = nn.Dropout(p=drop_rate)
 
@@ -303,11 +252,7 @@ class PoseTransformer(nn.Module):
 
         x = self.Temporal_norm(x)
         ##### x size [b, f, emb_dim], then take weighted mean on frame dimension, we only predict 3D pose of the center frame
-        
-        # new attention on weights
-        x = self.temporal_attn(x)
-         
-        # x = self.weighted_mean(x)
+        x = self.weighted_mean(x)
         x = x.view(b, 1, -1)
         return x
 
@@ -323,4 +268,3 @@ class PoseTransformer(nn.Module):
         x = x.view(b, 1, p, -1)
 
         return x
-

@@ -25,6 +25,7 @@ from common.camera import *
 import collections
 
 from common.model_poseformer import *
+from common.model_poseformer import attention_entropy_loss
 
 from common.loss import *
 from common.generators import ChunkedGenerator, UnchunkedGenerator
@@ -32,8 +33,13 @@ from time import time
 from common.utils import *
 
 
+torch.cuda.empty_cache()
+
+
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1, 2"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1"
+# print(torch.cuda.device_count())
 
 
 ###################
@@ -191,10 +197,10 @@ num_joints = keypoints_metadata['num_joints']
 #########################################PoseTransformer
 
 model_pos_train = PoseTransformer(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=32, depth=4,
-        num_heads=16, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0.1)
+        num_heads=8, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0.1)
 
 model_pos = PoseTransformer(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=32, depth=4,
-        num_heads=16, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0)
+        num_heads=8, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0)
 
 ################ load weight ########################
 # posetrans_checkpoint = torch.load('./checkpoint/pretrained_posetrans.bin', map_location=lambda storage, loc: storage)
@@ -302,8 +308,9 @@ if not args.evaluate:
             optimizer.zero_grad()
 
             # Predict 3D poses
-            predicted_3d_pos = model_pos_train(inputs_2d)
+            predicted_3d_pos, attention_weights = model_pos_train(inputs_2d)
 
+            
             del inputs_2d
             torch.cuda.empty_cache()
 
@@ -311,7 +318,12 @@ if not args.evaluate:
             epoch_loss_3d_train += inputs_3d.shape[0] * inputs_3d.shape[1] * loss_3d_pos.item()
             N += inputs_3d.shape[0] * inputs_3d.shape[1]
 
-            loss_total = loss_3d_pos
+
+            # new
+            loss_penalty = attention_entropy_loss(attention_weights)
+            alpha = 0.01
+            
+            loss_total = loss_3d_pos +  alpha * loss_penalty
 
             loss_total.backward()
 

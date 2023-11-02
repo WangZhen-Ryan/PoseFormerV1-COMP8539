@@ -84,6 +84,11 @@ class FreqMlp(nn.Module):
 #         x = self.proj(x)
 #         x = self.proj_drop(x)
 #         return x
+
+def attention_entropy_loss(attn_weights):
+    entropy = -torch.sum(attn_weights * torch.log(attn_weights + 1e-9), dim=1)  # Compute entropy for each sample
+    return -entropy.mean()  # Minimize negative entropy to concentrate attention
+
 class TemporalAttention(nn.Module):
     def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0.):
         super(TemporalAttention, self).__init__()
@@ -113,8 +118,7 @@ class TemporalAttention(nn.Module):
         # Weighted sum of the frames using the attention scores
         x = torch.bmm(attn_weights.transpose(1, 2), x)  # Shape: [b, 1, emb_dim]
 
-        return x.squeeze(1)  # Shape: [b, emb_dim]
-
+        return x.squeeze(1), attn_weights  # Shape: [b, emb_dim]
 
 class SparseAttention(nn.Module):
     def __init__(self, dim, num_heads=16, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0., stride=4):
@@ -305,11 +309,11 @@ class PoseTransformer(nn.Module):
         ##### x size [b, f, emb_dim], then take weighted mean on frame dimension, we only predict 3D pose of the center frame
         
         # new attention on weights
-        x = self.temporal_attn(x)
+        x,y = self.temporal_attn(x)
          
         # x = self.weighted_mean(x)
         x = x.view(b, 1, -1)
-        return x
+        return x,y
 
 
     def forward(self, x):
@@ -317,10 +321,19 @@ class PoseTransformer(nn.Module):
         b, _, _, p = x.shape
         ### now x is [batch_size, 2 channels, receptive frames, joint_num], following image data
         x = self.Spatial_forward_features(x)
-        x = self.forward_features(x)
+        x,y = self.forward_features(x)
+        
+        min_attn_indices = y.argmin(dim=1)
+        
+        # Modify the gradient of Temporal_pos_embed
+        for index in min_attn_indices:
+            if self.Temporal_pos_embed.requires_grad and self.Temporal_pos_embed.grad is not None:
+                # This zeroes out the gradient at the position with minimal attention.
+                self.Temporal_pos_embed.grad[0, index, :] *= 0
+
         x = self.head(x)
 
         x = x.view(b, 1, p, -1)
 
-        return x
+        return x,y
 

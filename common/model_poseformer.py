@@ -322,15 +322,6 @@ class PoseTransformer(nn.Module):
         ### now x is [batch_size, 2 channels, receptive frames, joint_num], following image data
         x = self.Spatial_forward_features(x)
         x,y = self.forward_features(x)
-        
-        min_attn_indices = y.argmin(dim=1)
-        
-        # Modify the gradient of Temporal_pos_embed
-        for index in min_attn_indices:
-            if self.Temporal_pos_embed.requires_grad and self.Temporal_pos_embed.grad is not None:
-                # This zeroes out the gradient at the position with minimal attention.
-                self.Temporal_pos_embed.grad[0, index, :] *= 0
-
         x = self.head(x)
 
         x = x.view(b, 1, p, -1)

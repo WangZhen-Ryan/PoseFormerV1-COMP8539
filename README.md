@@ -12,8 +12,8 @@ We modified the code based on the official implementation for [3D Human Pose Est
 - We did not update the large .bin file for the final model result. We uploaded all the log files that records the evaluation results of those bin files.
 
 - Inference Video Demonstration 
-    - [version1](https://github.com/WangZhen-Ryan/PoseFormerV1-COMP8539/blob/main/visualisation/01/data/output.mp4)
-    - [version2](https://drive.google.com/drive/folders/1R0PXb9Y1ninF9YuRj11Y8vhSPi6su7IZ?usp=sharing)
+    - [sample version1](https://github.com/WangZhen-Ryan/PoseFormerV1-COMP8539/blob/main/visualisation/01/data/output.mp4)
+    - [sample version2](https://drive.google.com/drive/folders/1R0PXb9Y1ninF9YuRj11Y8vhSPi6su7IZ?usp=sharing) OR [full sample output here](https://drive.google.com/file/d/1eAhh8z3zT72M4_P_pthLMQL8vXvli2w9/view?usp=sharing)
 
 ### Environment
 

@@ -25,7 +25,6 @@ from common.camera import *
 import collections
 
 from common.model_poseformer import *
-from common.model_poseformer import attention_entropy_loss
 
 from common.loss import *
 from common.generators import ChunkedGenerator, UnchunkedGenerator
@@ -33,12 +32,10 @@ from time import time
 from common.utils import *
 
 
-torch.cuda.empty_cache()
-
-
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
-os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1, 2, 3, 4, 5, 6"
 # print(torch.cuda.device_count())
 
 
@@ -308,8 +305,8 @@ if not args.evaluate:
             optimizer.zero_grad()
 
             # Predict 3D poses
-            predicted_3d_pos, attention_weights = model_pos_train(inputs_2d)
-            
+            predicted_3d_pos = model_pos_train(inputs_2d)
+
             del inputs_2d
             torch.cuda.empty_cache()
 
@@ -317,16 +314,8 @@ if not args.evaluate:
             epoch_loss_3d_train += inputs_3d.shape[0] * inputs_3d.shape[1] * loss_3d_pos.item()
             N += inputs_3d.shape[0] * inputs_3d.shape[1]
 
+            loss_total = loss_3d_pos
 
-            # new
-            loss_penalty = attention_entropy_loss(attention_weights)
-            alpha = 0.01
-            loss_total = loss_3d_pos +  alpha * loss_penalty
-            # loss_total = loss_3d_pos 
-            
-            
-            # print("a is ", loss_total)
-            
             loss_total.backward()
 
             optimizer.step()
@@ -368,11 +357,6 @@ if not args.evaluate:
 
                     predicted_3d_pos = model_pos(inputs_2d)
                     predicted_3d_pos_flip = model_pos(inputs_2d_flip)
-                    predicted_3d_pos_flip = predicted_3d_pos_flip[0]
-                    predicted_3d_pos = predicted_3d_pos[0]
-                    # print("b is ", predicted_3d_pos_flip)
-                    # print("Shape of c is", predicted_3d_pos_flip[0].shape)
-                    # print("Shape of d is", predicted_3d_pos_flip[1].shape)
                     predicted_3d_pos_flip[:, :, :, 0] *= -1
                     predicted_3d_pos_flip[:, :, joints_left + joints_right] = predicted_3d_pos_flip[:, :,
                                                                               joints_right + joints_left]
@@ -414,9 +398,7 @@ if not args.evaluate:
 
                     # Compute 3D poses
                     predicted_3d_pos = model_pos(inputs_2d)
-                    
-                    predicted_3d_pos = predicted_3d_pos[0]
-                    
+
                     del inputs_2d
                     torch.cuda.empty_cache()
 
@@ -547,10 +529,6 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
 
             predicted_3d_pos = model_pos(inputs_2d)
             predicted_3d_pos_flip = model_pos(inputs_2d_flip)
-            
-            predicted_3d_pos = predicted_3d_pos[0]
-            predicted_3d_pos_flip = predicted_3d_pos_flip[0]
-            
             predicted_3d_pos_flip[:, :, :, 0] *= -1
             predicted_3d_pos_flip[:, :, joints_left + joints_right] = predicted_3d_pos_flip[:, :,
                                                                       joints_right + joints_left]

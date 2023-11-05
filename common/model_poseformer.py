@@ -8,7 +8,6 @@ from einops import rearrange, repeat
 
 import torch
 import torch.nn as nn
-import torch_dct as dct
 import torch.nn.functional as F
 
 from timm.data import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
@@ -36,157 +35,31 @@ class Mlp(nn.Module):
         return x
 
 
-class FreqMlp(nn.Module):
-    def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
-        super().__init__()
-        out_features = out_features or in_features
-        hidden_features = hidden_features or in_features
-        self.fc1 = nn.Linear(in_features, hidden_features)
-        self.act = act_layer()
-        self.fc2 = nn.Linear(hidden_features, out_features)
-        self.drop = nn.Dropout(drop)
-
-    def forward(self, x):
-        b, f, _ = x.shape
-        x = dct.dct(x.permute(0, 2, 1)).permute(0, 2, 1).contiguous()
-        x = self.fc1(x)
-        x = self.act(x)
-        x = self.drop(x)
-        x = self.fc2(x)
-        x = self.drop(x)
-        x = dct.idct(x.permute(0, 2, 1)).permute(0, 2, 1).contiguous()
-        return x
-
-
-# class Attention(nn.Module):
-#     def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0.):
-#         super().__init__()
-#         self.num_heads = num_heads
-#         head_dim = dim // num_heads
-#         # NOTE scale factor was wrong in my original version, can set manually to be compat with prev weights
-#         self.scale = qk_scale or head_dim ** -0.5
-#
-#         self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
-#         self.attn_drop = nn.Dropout(attn_drop)
-#         self.proj = nn.Linear(dim, dim)
-#         self.proj_drop = nn.Dropout(proj_drop)
-#
-#     def forward(self, x):
-#         B, N, C = x.shape
-#         qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
-#         q, k, v = qkv[0], qkv[1], qkv[2]   # make torchscript happy (cannot use tensor as tuple)
-#
-#         attn = (q @ k.transpose(-2, -1)) * self.scale
-#         attn = attn.softmax(dim=-1)
-#         attn = self.attn_drop(attn)
-#
-#         x = (attn @ v).transpose(1, 2).reshape(B, N, C)
-#         x = self.proj(x)
-#         x = self.proj_drop(x)
-#         return x
-
-def attention_entropy_loss(attn_weights):
-    entropy = -torch.sum(attn_weights * torch.log(attn_weights + 1e-9), dim=1)  # Compute entropy for each sample
-    return -entropy.mean()  # Minimize negative entropy to concentrate attention
-
-class TemporalAttention(nn.Module):
-    def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0.):
-        super(TemporalAttention, self).__init__()
-
-        # Key projection
-        self.key = nn.Linear(dim, dim, bias=qkv_bias)
-
-        # Global query vector
-        self.query = nn.Parameter(torch.randn(dim, 1))
-
-        # Dropout
-        self.attn_drop = nn.Dropout(attn_drop)
-
-    def forward(self, x):
-        # Shape: [b, f, emb_dim]
-
-        # Projecting the input to obtain keys
-        k = self.key(x)  # Shape: [b, f, emb_dim]
-
-        # Calculating attention scores
-        attn_scores = torch.matmul(k, self.query)  # Shape: [b, f, 1]
-
-        # Applying softmax to get attention weights
-        attn_weights = F.softmax(attn_scores, dim=1)  # Shape: [b, f, 1]
-        attn_weights = self.attn_drop(attn_weights)
-
-        # Weighted sum of the frames using the attention scores
-        x = torch.bmm(attn_weights.transpose(1, 2), x)  # Shape: [b, 1, emb_dim]
-
-        return x.squeeze(1), attn_weights  # Shape: [b, emb_dim]
-
-class SparseAttention(nn.Module):
-    def __init__(self, dim, num_heads=16, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0., stride=4):
-        super().__init__()
-        self.num_heads = num_heads
-        self.stride = stride
-        head_dim = dim // num_heads
-
-        self.q_linear = nn.Linear(dim, dim, bias=qkv_bias)
-        self.k_linear = nn.Linear(dim, dim, bias=qkv_bias)
-        self.v_linear = nn.Linear(dim, dim, bias=qkv_bias)
-
-        self.attn_drop = nn.Dropout(attn_drop)
-        self.proj = nn.Linear(dim, dim)
-        self.proj_drop = nn.Dropout(proj_drop)
-
-    def forward(self, x):
-        B, N, C = x.shape
-        q = self.q_linear(x)
-        k = self.k_linear(x[:, ::self.stride])  # Strided attention
-        v = self.v_linear(x[:, ::self.stride])  # Strided attention
-
-        # Compute attention score
-        attn_score = F.relu(q.unsqueeze(2) + k.unsqueeze(1))  # Shape: [B, N, N/stride, C]
-
-        # Compute attention weights
-        attn = F.softmax(attn_score.sum(dim=-1), dim=-1)  # Summing over the last dimension to get shape [B, N, N/stride]
-        attn = self.attn_drop(attn)
-
-        # Compute output
-        x = (attn.unsqueeze(-1) * v.unsqueeze(1)).sum(dim=2)  # Shape: [B, N, C]
-        x = self.proj(x)
-        x = self.proj_drop(x)
-
-        return x
-
 class Attention(nn.Module):
-    def __init__(self, dim, num_heads=16, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0.):
+    def __init__(self, dim, num_heads=8, qkv_bias=False, qk_scale=None, attn_drop=0., proj_drop=0.):
         super().__init__()
         self.num_heads = num_heads
         head_dim = dim // num_heads
+        # NOTE scale factor was wrong in my original version, can set manually to be compat with prev weights
+        self.scale = qk_scale or head_dim ** -0.5
 
-        self.q_linear = nn.Linear(dim, dim, bias=qkv_bias)
-        self.k_linear = nn.Linear(dim, dim, bias=qkv_bias)
-        self.v_linear = nn.Linear(dim, dim, bias=qkv_bias)
-
+        self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
         self.attn_drop = nn.Dropout(attn_drop)
         self.proj = nn.Linear(dim, dim)
         self.proj_drop = nn.Dropout(proj_drop)
 
     def forward(self, x):
         B, N, C = x.shape
-        q = self.q_linear(x)
-        k = self.k_linear(x)
-        v = self.v_linear(x)
+        qkv = self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
+        q, k, v = qkv[0], qkv[1], qkv[2]   # make torchscript happy (cannot use tensor as tuple)
 
-        # Compute attention score
-        attn_score = F.relu(q.unsqueeze(2) + k.unsqueeze(1))  # Shape: [B, N, N, C]
-
-        # Compute attention weights
-        attn = F.softmax(attn_score.sum(dim=-1), dim=-1)  # Summing over the last dimension to get shape [B, N, N]
+        attn = (q @ k.transpose(-2, -1)) * self.scale
+        attn = attn.softmax(dim=-1)
         attn = self.attn_drop(attn)
 
-        # Compute output
-        x = (attn.unsqueeze(-1) * v.unsqueeze(1)).sum(dim=2)  # Shape: [B, N, C]
+        x = (attn @ v).transpose(1, 2).reshape(B, N, C)
         x = self.proj(x)
         x = self.proj_drop(x)
-
         return x
 
 
@@ -196,30 +69,22 @@ class Block(nn.Module):
                  drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm):
         super().__init__()
         self.norm1 = norm_layer(dim)
-        # self.attn = Attention(
-        #     dim, num_heads=num_heads, qkv_bias=qkv_bias, qk_scale=qk_scale, attn_drop=attn_drop, proj_drop=drop)
-
-        self.attn = SparseAttention(
+        self.attn = Attention(
             dim, num_heads=num_heads, qkv_bias=qkv_bias, qk_scale=qk_scale, attn_drop=attn_drop, proj_drop=drop)
-
         # NOTE: drop path for stochastic depth, we shall see if this is better than dropout here
         self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
         self.norm2 = norm_layer(dim)
         mlp_hidden_dim = int(dim * mlp_ratio)
-        self.mlp1 = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
-        self.norm3 = norm_layer(dim)
-        self.mlp2 = FreqMlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
+        self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
 
     def forward(self, x):
-        b, f, c = x.shape
         x = x + self.drop_path(self.attn(self.norm1(x)))
-        x1 = x[:, :f//2] + self.drop_path(self.mlp1(self.norm2(x[:, :f//2])))
-        x2 = x[:, f//2:] + self.drop_path(self.mlp2(self.norm3(x[:, f//2:])))
-        return torch.cat((x1, x2), dim=1)
+        x = x + self.drop_path(self.mlp(self.norm2(x)))
+        return x
 
 class PoseTransformer(nn.Module):
     def __init__(self, num_frame=9, num_joints=17, in_chans=2, embed_dim_ratio=32, depth=4,
-                 num_heads=16, mlp_ratio=2., qkv_bias=True, qk_scale=None,
+                 num_heads=8, mlp_ratio=2., qkv_bias=True, qk_scale=None,
                  drop_rate=0., attn_drop_rate=0., drop_path_rate=0.2,  norm_layer=None):
         """    ##########hybrid_backbone=None, representation_size=None,
         Args:
@@ -246,14 +111,9 @@ class PoseTransformer(nn.Module):
         ### spatial patch embedding
         self.Spatial_patch_to_embedding = nn.Linear(in_chans, embed_dim_ratio)
         self.Spatial_pos_embed = nn.Parameter(torch.zeros(1, num_joints, embed_dim_ratio))
-        ### temporal attention
-        self.temporal_attn = TemporalAttention(embed_dim, num_heads=num_heads, qkv_bias=qkv_bias,
-                                               attn_drop=attn_drop_rate)
-        
+
         self.Temporal_pos_embed = nn.Parameter(torch.zeros(1, num_frame, embed_dim))
         self.pos_drop = nn.Dropout(p=drop_rate)
-
-        self.Freq_embedding = nn.Linear(in_chans*num_joints, embed_dim)
 
 
         dpr = [x.item() for x in torch.linspace(0, drop_path_rate, depth)]  # stochastic depth decay rule
@@ -297,9 +157,8 @@ class PoseTransformer(nn.Module):
         x = rearrange(x, '(b f) w c -> b f (w c)', f=f)
         return x
 
-
     def forward_features(self, x):
-        b = x.shape[0]
+        b  = x.shape[0]
         x += self.Temporal_pos_embed
         x = self.pos_drop(x)
         for blk in self.blocks:
@@ -307,13 +166,9 @@ class PoseTransformer(nn.Module):
 
         x = self.Temporal_norm(x)
         ##### x size [b, f, emb_dim], then take weighted mean on frame dimension, we only predict 3D pose of the center frame
-        
-        # new attention on weights
-        x,y = self.temporal_attn(x)
-         
-        # x = self.weighted_mean(x)
+        x = self.weighted_mean(x)
         x = x.view(b, 1, -1)
-        return x,y
+        return x
 
 
     def forward(self, x):
@@ -321,19 +176,10 @@ class PoseTransformer(nn.Module):
         b, _, _, p = x.shape
         ### now x is [batch_size, 2 channels, receptive frames, joint_num], following image data
         x = self.Spatial_forward_features(x)
-        x,y = self.forward_features(x)
-        
-        min_attn_indices = y.argmin(dim=1)
-        
-        # Modify the gradient of Temporal_pos_embed
-        for index in min_attn_indices:
-            if self.Temporal_pos_embed.requires_grad and self.Temporal_pos_embed.grad is not None:
-                # This zeroes out the gradient at the position with minimal attention.
-                self.Temporal_pos_embed.grad[0, index, :] *= 0
-
+        x = self.forward_features(x)
         x = self.head(x)
 
         x = x.view(b, 1, p, -1)
 
-        return x,y
+        return x
 

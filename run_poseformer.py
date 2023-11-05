@@ -194,10 +194,10 @@ num_joints = keypoints_metadata['num_joints']
 #########################################PoseTransformer
 
 model_pos_train = PoseTransformer(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=32, depth=4,
-        num_heads=8, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0.1)
+        num_heads=16, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0.1)
 
 model_pos = PoseTransformer(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=32, depth=4,
-        num_heads=8, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0)
+        num_heads=16, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0)
 
 ################ load weight ########################
 # posetrans_checkpoint = torch.load('./checkpoint/pretrained_posetrans.bin', map_location=lambda storage, loc: storage)

@@ -8,6 +8,7 @@ from einops import rearrange, repeat
 
 import torch
 import torch.nn as nn
+import torch_dct as dct
 import torch.nn.functional as F
 
 from timm.data import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
@@ -32,6 +33,28 @@ class Mlp(nn.Module):
         x = self.drop(x)
         x = self.fc2(x)
         x = self.drop(x)
+        return x
+
+
+class FreqMlp(nn.Module):
+    def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
+        super().__init__()
+        out_features = out_features or in_features
+        hidden_features = hidden_features or in_features
+        self.fc1 = nn.Linear(in_features, hidden_features)
+        self.act = act_layer()
+        self.fc2 = nn.Linear(hidden_features, out_features)
+        self.drop = nn.Dropout(drop)
+
+    def forward(self, x):
+        b, f, _ = x.shape
+        x = dct.dct(x.permute(0, 2, 1)).permute(0, 2, 1).contiguous()
+        x = self.fc1(x)
+        x = self.act(x)
+        x = self.drop(x)
+        x = self.fc2(x)
+        x = self.drop(x)
+        x = dct.idct(x.permute(0, 2, 1)).permute(0, 2, 1).contiguous()
         return x
 
 
@@ -111,12 +134,16 @@ class Block(nn.Module):
         self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
         self.norm2 = norm_layer(dim)
         mlp_hidden_dim = int(dim * mlp_ratio)
-        self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
+        self.mlp1 = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
+        self.norm3 = norm_layer(dim)
+        self.mlp2 = FreqMlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
 
     def forward(self, x):
+        b, f, c = x.shape
         x = x + self.drop_path(self.attn(self.norm1(x)))
-        x = x + self.drop_path(self.mlp(self.norm2(x)))
-        return x
+        x1 = x[:, :f//2] + self.drop_path(self.mlp1(self.norm2(x[:, :f//2])))
+        x2 = x[:, f//2:] + self.drop_path(self.mlp2(self.norm3(x[:, f//2:])))
+        return torch.cat((x1, x2), dim=1)
 
 class PoseTransformer(nn.Module):
     def __init__(self, num_frame=9, num_joints=17, in_chans=2, embed_dim_ratio=32, depth=4,
@@ -150,6 +177,8 @@ class PoseTransformer(nn.Module):
 
         self.Temporal_pos_embed = nn.Parameter(torch.zeros(1, num_frame, embed_dim))
         self.pos_drop = nn.Dropout(p=drop_rate)
+
+        self.Freq_embedding = nn.Linear(in_chans*num_joints, embed_dim)
 
 
         dpr = [x.item() for x in torch.linspace(0, drop_path_rate, depth)]  # stochastic depth decay rule
@@ -193,8 +222,9 @@ class PoseTransformer(nn.Module):
         x = rearrange(x, '(b f) w c -> b f (w c)', f=f)
         return x
 
+
     def forward_features(self, x):
-        b  = x.shape[0]
+        b = x.shape[0]
         x += self.Temporal_pos_embed
         x = self.pos_drop(x)
         for blk in self.blocks:

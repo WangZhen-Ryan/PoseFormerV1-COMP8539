@@ -309,7 +309,6 @@ if not args.evaluate:
 
             # Predict 3D poses
             predicted_3d_pos, attention_weights = model_pos_train(inputs_2d)
-
             
             del inputs_2d
             torch.cuda.empty_cache()
@@ -322,9 +321,12 @@ if not args.evaluate:
             # new
             loss_penalty = attention_entropy_loss(attention_weights)
             alpha = 0.01
-            
             loss_total = loss_3d_pos +  alpha * loss_penalty
-
+            # loss_total = loss_3d_pos 
+            
+            
+            # print("a is ", loss_total)
+            
             loss_total.backward()
 
             optimizer.step()
@@ -366,6 +368,11 @@ if not args.evaluate:
 
                     predicted_3d_pos = model_pos(inputs_2d)
                     predicted_3d_pos_flip = model_pos(inputs_2d_flip)
+                    predicted_3d_pos_flip = predicted_3d_pos_flip[0]
+                    predicted_3d_pos = predicted_3d_pos[0]
+                    # print("b is ", predicted_3d_pos_flip)
+                    # print("Shape of c is", predicted_3d_pos_flip[0].shape)
+                    # print("Shape of d is", predicted_3d_pos_flip[1].shape)
                     predicted_3d_pos_flip[:, :, :, 0] *= -1
                     predicted_3d_pos_flip[:, :, joints_left + joints_right] = predicted_3d_pos_flip[:, :,
                                                                               joints_right + joints_left]
@@ -407,7 +414,9 @@ if not args.evaluate:
 
                     # Compute 3D poses
                     predicted_3d_pos = model_pos(inputs_2d)
-
+                    
+                    predicted_3d_pos = predicted_3d_pos[0]
+                    
                     del inputs_2d
                     torch.cuda.empty_cache()
 
@@ -538,6 +547,10 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
 
             predicted_3d_pos = model_pos(inputs_2d)
             predicted_3d_pos_flip = model_pos(inputs_2d_flip)
+            
+            predicted_3d_pos = predicted_3d_pos[0]
+            predicted_3d_pos_flip = predicted_3d_pos_flip[0]
+            
             predicted_3d_pos_flip[:, :, :, 0] *= -1
             predicted_3d_pos_flip[:, :, joints_left + joints_right] = predicted_3d_pos_flip[:, :,
                                                                       joints_right + joints_left]

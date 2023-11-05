@@ -1,0 +1,1459 @@
+2023-10-20 Wavelet - gt
+==========================================
+epoch_10
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_10.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 42.67995811342534 mm
+Protocol #2 Error (P-MPJPE): 31.755859391227872 mm
+Protocol #3 Error (N-MPJPE): 39.49657047994291 mm
+Velocity Error (MPJVE): 2.476865591369124 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 51.107525225286594 mm
+Protocol #2 Error (P-MPJPE): 39.85698670809542 mm
+Protocol #3 Error (N-MPJPE): 48.39758637385369 mm
+Velocity Error (MPJVE): 2.174528118734036 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 47.26578258380389 mm
+Protocol #2 Error (P-MPJPE): 35.97599924663491 mm
+Protocol #3 Error (N-MPJPE): 45.01804795631571 mm
+Velocity Error (MPJVE): 2.497148413187942 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 38.53824590866845 mm
+Protocol #2 Error (P-MPJPE): 30.74090517491559 mm
+Protocol #3 Error (N-MPJPE): 37.3786472160738 mm
+Velocity Error (MPJVE): 1.8702530082515127 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 46.39757978819403 mm
+Protocol #2 Error (P-MPJPE): 36.32592200314749 mm
+Protocol #3 Error (N-MPJPE): 44.04228174868906 mm
+Velocity Error (MPJVE): 3.3005033042972194 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 41.37046614345383 mm
+Protocol #2 Error (P-MPJPE): 31.043243320537872 mm
+Protocol #3 Error (N-MPJPE): 40.012511239460316 mm
+Velocity Error (MPJVE): 2.5750032157847356 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 46.97936040573259 mm
+Protocol #2 Error (P-MPJPE): 33.334958258964384 mm
+Protocol #3 Error (N-MPJPE): 45.16859314707586 mm
+Velocity Error (MPJVE): 2.314231923031634 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.5351371296298 mm
+Protocol #2 Error (P-MPJPE): 28.552571618257364 mm
+Protocol #3 Error (N-MPJPE): 35.969941315883766 mm
+Velocity Error (MPJVE): 3.039759576785673 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 45.05416831737604 mm
+Protocol #2 Error (P-MPJPE): 34.751635422217014 mm
+Protocol #3 Error (N-MPJPE): 43.58239148848849 mm
+Velocity Error (MPJVE): 2.9886110079208636 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 45.20200401164125 mm
+Protocol #2 Error (P-MPJPE): 33.992645916274085 mm
+Protocol #3 Error (N-MPJPE): 42.5949489852968 mm
+Velocity Error (MPJVE): 1.7630406684512379 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 46.61980396033927 mm
+Protocol #2 Error (P-MPJPE): 34.2452364154955 mm
+Protocol #3 Error (N-MPJPE): 44.71350925115244 mm
+Velocity Error (MPJVE): 2.1878396099569173 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 48.62604836914539 mm
+Protocol #2 Error (P-MPJPE): 38.317752773078524 mm
+Protocol #3 Error (N-MPJPE): 46.60216066523852 mm
+Velocity Error (MPJVE): 1.2868597008752134 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 45.085801531733466 mm
+Protocol #2 Error (P-MPJPE): 35.41562792792496 mm
+Protocol #3 Error (N-MPJPE): 42.5799844920912 mm
+Velocity Error (MPJVE): 1.7638346928997384 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 38.278275048976745 mm
+Protocol #2 Error (P-MPJPE): 29.732563869765393 mm
+Protocol #3 Error (N-MPJPE): 35.928941627816585 mm
+Velocity Error (MPJVE): 2.6888280730952814 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 53.48767014248305 mm
+Protocol #2 Error (P-MPJPE): 42.86934777377941 mm
+Protocol #3 Error (N-MPJPE): 50.955845006396046 mm
+Velocity Error (MPJVE): 1.7431439032617224 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 44.9 mm
+Protocol #2 (P-MPJPE) action-wise average: 34.5 mm
+Protocol #3 (N-MPJPE) action-wise average: 42.8 mm
+Velocity      (MPJVE) action-wise average: 2.31 mm
+epoch_20
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_20.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 43.799976015073575 mm
+Protocol #2 Error (P-MPJPE): 31.86175039639116 mm
+Protocol #3 Error (N-MPJPE): 40.19086060511852 mm
+Velocity Error (MPJVE): 2.5321661762725314 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 51.65438495556052 mm
+Protocol #2 Error (P-MPJPE): 39.6860376902504 mm
+Protocol #3 Error (N-MPJPE): 48.47488275692274 mm
+Velocity Error (MPJVE): 2.198707715645979 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 48.948113351872905 mm
+Protocol #2 Error (P-MPJPE): 36.47419416542984 mm
+Protocol #3 Error (N-MPJPE): 45.97942521906385 mm
+Velocity Error (MPJVE): 2.53572022995972 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 40.35192469002815 mm
+Protocol #2 Error (P-MPJPE): 32.0801056047307 mm
+Protocol #3 Error (N-MPJPE): 38.758123982557464 mm
+Velocity Error (MPJVE): 1.92136757546068 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 47.909285032667896 mm
+Protocol #2 Error (P-MPJPE): 36.96356076547647 mm
+Protocol #3 Error (N-MPJPE): 44.767994351117515 mm
+Velocity Error (MPJVE): 3.3344652893085143 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 42.84627662476688 mm
+Protocol #2 Error (P-MPJPE): 31.77627328214551 mm
+Protocol #3 Error (N-MPJPE): 41.21955738029485 mm
+Velocity Error (MPJVE): 2.6279885896060056 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 48.14920703760318 mm
+Protocol #2 Error (P-MPJPE): 33.296026818213925 mm
+Protocol #3 Error (N-MPJPE): 45.81015288428324 mm
+Velocity Error (MPJVE): 2.3490636717844575 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 38.57806210376591 mm
+Protocol #2 Error (P-MPJPE): 28.221390260375337 mm
+Protocol #3 Error (N-MPJPE): 36.10415778254215 mm
+Velocity Error (MPJVE): 3.1294647142909873 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 46.66596043450378 mm
+Protocol #2 Error (P-MPJPE): 35.32326099224658 mm
+Protocol #3 Error (N-MPJPE): 44.6426369984813 mm
+Velocity Error (MPJVE): 3.0218064084095593 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 45.86217170682178 mm
+Protocol #2 Error (P-MPJPE): 34.110233570247004 mm
+Protocol #3 Error (N-MPJPE): 42.419456796912705 mm
+Velocity Error (MPJVE): 1.7828933201082204 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 48.430853562471654 mm
+Protocol #2 Error (P-MPJPE): 34.99863089300171 mm
+Protocol #3 Error (N-MPJPE): 45.8940348392929 mm
+Velocity Error (MPJVE): 2.2267556725720805 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 49.796609145091836 mm
+Protocol #2 Error (P-MPJPE): 39.12426840258846 mm
+Protocol #3 Error (N-MPJPE): 47.27760785616241 mm
+Velocity Error (MPJVE): 1.2922013502809693 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 46.64401836628373 mm
+Protocol #2 Error (P-MPJPE): 35.903258216908 mm
+Protocol #3 Error (N-MPJPE): 43.45776726334025 mm
+Velocity Error (MPJVE): 1.796898316188749 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 39.04765708085239 mm
+Protocol #2 Error (P-MPJPE): 29.682306400868296 mm
+Protocol #3 Error (N-MPJPE): 35.788410314183785 mm
+Velocity Error (MPJVE): 2.724791782545565 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 53.765886610340544 mm
+Protocol #2 Error (P-MPJPE): 42.787189881695504 mm
+Protocol #3 Error (N-MPJPE): 51.32247460385611 mm
+Velocity Error (MPJVE): 1.756144015081533 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 46.2 mm
+Protocol #2 (P-MPJPE) action-wise average: 34.8 mm
+Protocol #3 (N-MPJPE) action-wise average: 43.5 mm
+Velocity      (MPJVE) action-wise average: 2.35 mm
+epoch_30
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_30.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 43.52498326726304 mm
+Protocol #2 Error (P-MPJPE): 31.998058356244897 mm
+Protocol #3 Error (N-MPJPE): 40.16642439129364 mm
+Velocity Error (MPJVE): 2.485064479919703 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 52.47210732090705 mm
+Protocol #2 Error (P-MPJPE): 40.3448752676471 mm
+Protocol #3 Error (N-MPJPE): 49.5274771333991 mm
+Velocity Error (MPJVE): 2.188141350890097 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 48.1270603700126 mm
+Protocol #2 Error (P-MPJPE): 36.44057131047029 mm
+Protocol #3 Error (N-MPJPE): 45.626968429272814 mm
+Velocity Error (MPJVE): 2.5007380513861346 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 39.94268378586114 mm
+Protocol #2 Error (P-MPJPE): 31.96194759981656 mm
+Protocol #3 Error (N-MPJPE): 38.48239939181805 mm
+Velocity Error (MPJVE): 1.900164842660985 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 47.36795659896161 mm
+Protocol #2 Error (P-MPJPE): 36.76051373944664 mm
+Protocol #3 Error (N-MPJPE): 44.47627141087228 mm
+Velocity Error (MPJVE): 3.2746467720242713 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 43.08522476168885 mm
+Protocol #2 Error (P-MPJPE): 32.33424638098755 mm
+Protocol #3 Error (N-MPJPE): 41.74251892205789 mm
+Velocity Error (MPJVE): 2.5864856819932465 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 47.833298773660474 mm
+Protocol #2 Error (P-MPJPE): 33.44991124601068 mm
+Protocol #3 Error (N-MPJPE): 45.64276537694081 mm
+Velocity Error (MPJVE): 2.310183349385881 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.665214565235814 mm
+Protocol #2 Error (P-MPJPE): 28.116949511352804 mm
+Protocol #3 Error (N-MPJPE): 35.56696605580177 mm
+Velocity Error (MPJVE): 3.055297259199079 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 46.321584475238254 mm
+Protocol #2 Error (P-MPJPE): 35.29412919530714 mm
+Protocol #3 Error (N-MPJPE): 44.479173667691946 mm
+Velocity Error (MPJVE): 2.98192359880081 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 45.68150346893342 mm
+Protocol #2 Error (P-MPJPE): 33.97931913603344 mm
+Protocol #3 Error (N-MPJPE): 42.39298283935312 mm
+Velocity Error (MPJVE): 1.7817980586226507 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 48.07335912619324 mm
+Protocol #2 Error (P-MPJPE): 35.11453070849992 mm
+Protocol #3 Error (N-MPJPE): 45.80105472487525 mm
+Velocity Error (MPJVE): 2.1867394490887095 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 49.2624524879595 mm
+Protocol #2 Error (P-MPJPE): 39.123566719936555 mm
+Protocol #3 Error (N-MPJPE): 47.05560502025234 mm
+Velocity Error (MPJVE): 1.2868857271454126 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 46.149924154511936 mm
+Protocol #2 Error (P-MPJPE): 35.81328016982364 mm
+Protocol #3 Error (N-MPJPE): 43.227348059404015 mm
+Velocity Error (MPJVE): 1.7842923798881842 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 38.86050908665257 mm
+Protocol #2 Error (P-MPJPE): 30.16111835561997 mm
+Protocol #3 Error (N-MPJPE): 36.250116150786916 mm
+Velocity Error (MPJVE): 2.6817154009712434 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 54.37968463023543 mm
+Protocol #2 Error (P-MPJPE): 44.00765194752457 mm
+Protocol #3 Error (N-MPJPE): 51.95728257721483 mm
+Velocity Error (MPJVE): 1.7480100780371832 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 45.9 mm
+Protocol #2 (P-MPJPE) action-wise average: 35.0 mm
+Protocol #3 (N-MPJPE) action-wise average: 43.5 mm
+Velocity      (MPJVE) action-wise average: 2.32 mm
+epoch_40
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_40.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 43.21955154441715 mm
+Protocol #2 Error (P-MPJPE): 32.00447283653068 mm
+Protocol #3 Error (N-MPJPE): 40.0174751714835 mm
+Velocity Error (MPJVE): 2.4666933793040617 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 52.11664418172787 mm
+Protocol #2 Error (P-MPJPE): 40.62789194908446 mm
+Protocol #3 Error (N-MPJPE): 49.328514521161416 mm
+Velocity Error (MPJVE): 2.169793126879115 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 48.30919079650484 mm
+Protocol #2 Error (P-MPJPE): 36.71394897068527 mm
+Protocol #3 Error (N-MPJPE): 45.98296728021327 mm
+Velocity Error (MPJVE): 2.4904493624612076 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 40.83097923876456 mm
+Protocol #2 Error (P-MPJPE): 33.053194009293776 mm
+Protocol #3 Error (N-MPJPE): 39.54309414692357 mm
+Velocity Error (MPJVE): 1.8922943459032193 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 47.405179194345806 mm
+Protocol #2 Error (P-MPJPE): 36.91757502931409 mm
+Protocol #3 Error (N-MPJPE): 44.643694496465606 mm
+Velocity Error (MPJVE): 3.262683541235675 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 42.76743263382526 mm
+Protocol #2 Error (P-MPJPE): 32.20895508559623 mm
+Protocol #3 Error (N-MPJPE): 41.49529315899069 mm
+Velocity Error (MPJVE): 2.5703719634618944 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 47.501059801282246 mm
+Protocol #2 Error (P-MPJPE): 33.36874187058193 mm
+Protocol #3 Error (N-MPJPE): 45.46602472821333 mm
+Velocity Error (MPJVE): 2.302522561884153 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.978981475487345 mm
+Protocol #2 Error (P-MPJPE): 28.572201807555494 mm
+Protocol #3 Error (N-MPJPE): 35.93228562995221 mm
+Velocity Error (MPJVE): 3.033747647554416 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 45.825212179419225 mm
+Protocol #2 Error (P-MPJPE): 35.244720828540856 mm
+Protocol #3 Error (N-MPJPE): 44.022933573659856 mm
+Velocity Error (MPJVE): 2.956736203506268 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 45.6708935415525 mm
+Protocol #2 Error (P-MPJPE): 34.06454606751898 mm
+Protocol #3 Error (N-MPJPE): 42.54905890536311 mm
+Velocity Error (MPJVE): 1.7622090038990603 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 47.713188434831565 mm
+Protocol #2 Error (P-MPJPE): 35.005516084841794 mm
+Protocol #3 Error (N-MPJPE): 45.468018590552326 mm
+Velocity Error (MPJVE): 2.171324050801836 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 49.55080775763258 mm
+Protocol #2 Error (P-MPJPE): 39.50270488441075 mm
+Protocol #3 Error (N-MPJPE): 47.452330100740866 mm
+Velocity Error (MPJVE): 1.3030672203807458 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 46.670158638917705 mm
+Protocol #2 Error (P-MPJPE): 36.20884395250085 mm
+Protocol #3 Error (N-MPJPE): 43.79375376655454 mm
+Velocity Error (MPJVE): 1.786752271010187 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 38.68271014101415 mm
+Protocol #2 Error (P-MPJPE): 30.285727366747555 mm
+Protocol #3 Error (N-MPJPE): 36.21594618636863 mm
+Velocity Error (MPJVE): 2.6471290632365783 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 55.129079379466866 mm
+Protocol #2 Error (P-MPJPE): 44.54976369063063 mm
+Protocol #3 Error (N-MPJPE): 52.66229939091311 mm
+Velocity Error (MPJVE): 1.7524931285003071 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 46.0 mm
+Protocol #2 (P-MPJPE) action-wise average: 35.2 mm
+Protocol #3 (N-MPJPE) action-wise average: 43.6 mm
+Velocity      (MPJVE) action-wise average: 2.3 mm
+epoch_50
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_50.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 43.20418155710257 mm
+Protocol #2 Error (P-MPJPE): 32.162108016175694 mm
+Protocol #3 Error (N-MPJPE): 40.28684905750909 mm
+Velocity Error (MPJVE): 2.5109500120378003 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 52.08194800455626 mm
+Protocol #2 Error (P-MPJPE): 40.72623860184993 mm
+Protocol #3 Error (N-MPJPE): 49.518025459627665 mm
+Velocity Error (MPJVE): 2.18591709610292 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 48.15015770078826 mm
+Protocol #2 Error (P-MPJPE): 36.39568336587266 mm
+Protocol #3 Error (N-MPJPE): 45.906633262052075 mm
+Velocity Error (MPJVE): 2.4909207356013 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 40.4513636313002 mm
+Protocol #2 Error (P-MPJPE): 33.024876318249134 mm
+Protocol #3 Error (N-MPJPE): 39.2957676963645 mm
+Velocity Error (MPJVE): 1.912738613873541 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 46.986357166119646 mm
+Protocol #2 Error (P-MPJPE): 36.60089099964515 mm
+Protocol #3 Error (N-MPJPE): 44.2923979049021 mm
+Velocity Error (MPJVE): 3.2836153778332955 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 42.97572097535716 mm
+Protocol #2 Error (P-MPJPE): 32.177606402527175 mm
+Protocol #3 Error (N-MPJPE): 41.645660345998756 mm
+Velocity Error (MPJVE): 2.5809786105091885 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 47.89513148083365 mm
+Protocol #2 Error (P-MPJPE): 33.587349683409585 mm
+Protocol #3 Error (N-MPJPE): 45.78044049966196 mm
+Velocity Error (MPJVE): 2.3114203431802633 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.30648891244668 mm
+Protocol #2 Error (P-MPJPE): 28.17286345766559 mm
+Protocol #3 Error (N-MPJPE): 35.32093454007479 mm
+Velocity Error (MPJVE): 3.0435766777110365 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 45.962357368904236 mm
+Protocol #2 Error (P-MPJPE): 35.33490623665115 mm
+Protocol #3 Error (N-MPJPE): 44.244501657804406 mm
+Velocity Error (MPJVE): 2.97935528638225 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 45.56070410987491 mm
+Protocol #2 Error (P-MPJPE): 34.15500226268134 mm
+Protocol #3 Error (N-MPJPE): 42.58153507691352 mm
+Velocity Error (MPJVE): 1.7773512732420393 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 47.50361907562115 mm
+Protocol #2 Error (P-MPJPE): 34.87080107686048 mm
+Protocol #3 Error (N-MPJPE): 45.33948655994465 mm
+Velocity Error (MPJVE): 2.180875057363965 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 49.62771886883642 mm
+Protocol #2 Error (P-MPJPE): 39.74336147194027 mm
+Protocol #3 Error (N-MPJPE): 47.68025593336182 mm
+Velocity Error (MPJVE): 1.3093937211267632 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 46.43091131067429 mm
+Protocol #2 Error (P-MPJPE): 36.200875366304594 mm
+Protocol #3 Error (N-MPJPE): 43.75083808594572 mm
+Velocity Error (MPJVE): 1.8009826834554483 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 38.15290597269585 mm
+Protocol #2 Error (P-MPJPE): 29.973894553314544 mm
+Protocol #3 Error (N-MPJPE): 35.78360639686245 mm
+Velocity Error (MPJVE): 2.6628002814212866 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 55.390646729929976 mm
+Protocol #2 Error (P-MPJPE): 45.01397108278839 mm
+Protocol #3 Error (N-MPJPE): 52.949924216138555 mm
+Velocity Error (MPJVE): 1.7594300548319306 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 45.8 mm
+Protocol #2 (P-MPJPE) action-wise average: 35.2 mm
+Protocol #3 (N-MPJPE) action-wise average: 43.6 mm
+Velocity      (MPJVE) action-wise average: 2.32 mm
+epoch_60
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_60.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 42.80136840634214 mm
+Protocol #2 Error (P-MPJPE): 31.805449289730543 mm
+Protocol #3 Error (N-MPJPE): 39.92046168660687 mm
+Velocity Error (MPJVE): 2.510330856725784 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 52.516971748083385 mm
+Protocol #2 Error (P-MPJPE): 40.830662721795974 mm
+Protocol #3 Error (N-MPJPE): 49.97255854463614 mm
+Velocity Error (MPJVE): 2.183066574387484 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 47.56908843041081 mm
+Protocol #2 Error (P-MPJPE): 36.246749270635696 mm
+Protocol #3 Error (N-MPJPE): 45.34048668740528 mm
+Velocity Error (MPJVE): 2.494739834208345 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 39.895586259083096 mm
+Protocol #2 Error (P-MPJPE): 32.69390172172587 mm
+Protocol #3 Error (N-MPJPE): 38.77245932984257 mm
+Velocity Error (MPJVE): 1.9028555393976978 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 47.01090203806096 mm
+Protocol #2 Error (P-MPJPE): 36.73989286316151 mm
+Protocol #3 Error (N-MPJPE): 44.378384117931 mm
+Velocity Error (MPJVE): 3.285054736280087 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 42.58147758246086 mm
+Protocol #2 Error (P-MPJPE): 32.244471537350705 mm
+Protocol #3 Error (N-MPJPE): 41.30815495067527 mm
+Velocity Error (MPJVE): 2.586634702394892 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 47.04653995720631 mm
+Protocol #2 Error (P-MPJPE): 33.06959583437688 mm
+Protocol #3 Error (N-MPJPE): 45.01496989189858 mm
+Velocity Error (MPJVE): 2.313619480202728 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.08867499011097 mm
+Protocol #2 Error (P-MPJPE): 28.336351067657766 mm
+Protocol #3 Error (N-MPJPE): 35.22135912851385 mm
+Velocity Error (MPJVE): 3.051123736933077 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 45.75920620763711 mm
+Protocol #2 Error (P-MPJPE): 35.17496389649432 mm
+Protocol #3 Error (N-MPJPE): 44.06905097546776 mm
+Velocity Error (MPJVE): 2.984844100352918 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 45.23490930444756 mm
+Protocol #2 Error (P-MPJPE): 33.96451815664173 mm
+Protocol #3 Error (N-MPJPE): 42.27349366299301 mm
+Velocity Error (MPJVE): 1.7802014491571168 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 47.34782006071293 mm
+Protocol #2 Error (P-MPJPE): 35.04960888183265 mm
+Protocol #3 Error (N-MPJPE): 45.29061457156008 mm
+Velocity Error (MPJVE): 2.1814014627605114 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 49.45269525561684 mm
+Protocol #2 Error (P-MPJPE): 39.76570852192418 mm
+Protocol #3 Error (N-MPJPE): 47.493832490817326 mm
+Velocity Error (MPJVE): 1.3085854290772296 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 46.31705268497809 mm
+Protocol #2 Error (P-MPJPE): 36.29051488648493 mm
+Protocol #3 Error (N-MPJPE): 43.6706689659432 mm
+Velocity Error (MPJVE): 1.7999076378569443 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 37.80694044582538 mm
+Protocol #2 Error (P-MPJPE): 29.93101892490814 mm
+Protocol #3 Error (N-MPJPE): 35.742908718907046 mm
+Velocity Error (MPJVE): 2.6710939636434623 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 55.26837037133739 mm
+Protocol #2 Error (P-MPJPE): 44.96209325854421 mm
+Protocol #3 Error (N-MPJPE): 52.839074297812026 mm
+Velocity Error (MPJVE): 1.7615361907909268 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 45.6 mm
+Protocol #2 (P-MPJPE) action-wise average: 35.1 mm
+Protocol #3 (N-MPJPE) action-wise average: 43.4 mm
+Velocity      (MPJVE) action-wise average: 2.32 mm
+epoch_70
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_70.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 43.136861530517834 mm
+Protocol #2 Error (P-MPJPE): 31.920470318480575 mm
+Protocol #3 Error (N-MPJPE): 40.03212505587001 mm
+Velocity Error (MPJVE): 2.5246322439878894 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 52.58171020004528 mm
+Protocol #2 Error (P-MPJPE): 40.8050359555839 mm
+Protocol #3 Error (N-MPJPE): 49.919209697653535 mm
+Velocity Error (MPJVE): 2.20165323158904 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 47.754478944704076 mm
+Protocol #2 Error (P-MPJPE): 36.20005117301481 mm
+Protocol #3 Error (N-MPJPE): 45.357922385492245 mm
+Velocity Error (MPJVE): 2.5119608665190403 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 40.21807501841819 mm
+Protocol #2 Error (P-MPJPE): 32.950231134791046 mm
+Protocol #3 Error (N-MPJPE): 39.037894902816625 mm
+Velocity Error (MPJVE): 1.9316249079773433 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 47.37309456266959 mm
+Protocol #2 Error (P-MPJPE): 36.90030090571389 mm
+Protocol #3 Error (N-MPJPE): 44.597480270786264 mm
+Velocity Error (MPJVE): 3.3077801658493957 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 42.541318155015325 mm
+Protocol #2 Error (P-MPJPE): 32.18525344997743 mm
+Protocol #3 Error (N-MPJPE): 41.151002300773776 mm
+Velocity Error (MPJVE): 2.6038616346898515 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 47.33695443883495 mm
+Protocol #2 Error (P-MPJPE): 33.14744740925303 mm
+Protocol #3 Error (N-MPJPE): 45.17823200880432 mm
+Velocity Error (MPJVE): 2.3308318455645862 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.3697902014588 mm
+Protocol #2 Error (P-MPJPE): 28.38180938054807 mm
+Protocol #3 Error (N-MPJPE): 35.43269688832819 mm
+Velocity Error (MPJVE): 3.0571805478830196 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 45.992112268482586 mm
+Protocol #2 Error (P-MPJPE): 35.37502379931394 mm
+Protocol #3 Error (N-MPJPE): 44.1897810336979 mm
+Velocity Error (MPJVE): 3.007830380646709 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 45.349487007746106 mm
+Protocol #2 Error (P-MPJPE): 34.08143955956751 mm
+Protocol #3 Error (N-MPJPE): 42.406603151720084 mm
+Velocity Error (MPJVE): 1.784979650297399 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 47.42908895668213 mm
+Protocol #2 Error (P-MPJPE): 34.92567743696768 mm
+Protocol #3 Error (N-MPJPE): 45.182306109322525 mm
+Velocity Error (MPJVE): 2.196548859245533 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 49.76110127256429 mm
+Protocol #2 Error (P-MPJPE): 39.996205573892844 mm
+Protocol #3 Error (N-MPJPE): 47.78417496765228 mm
+Velocity Error (MPJVE): 1.317747657479842 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 46.600059303159995 mm
+Protocol #2 Error (P-MPJPE): 36.59310984714408 mm
+Protocol #3 Error (N-MPJPE): 43.892555403917996 mm
+Velocity Error (MPJVE): 1.8131108567091518 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 37.87719739318814 mm
+Protocol #2 Error (P-MPJPE): 29.845092292978133 mm
+Protocol #3 Error (N-MPJPE): 35.692072344468045 mm
+Velocity Error (MPJVE): 2.667028859556772 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 55.338980808121654 mm
+Protocol #2 Error (P-MPJPE): 45.025521911128 mm
+Protocol #3 Error (N-MPJPE): 52.949278127451706 mm
+Velocity Error (MPJVE): 1.7744751587607535 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 45.8 mm
+Protocol #2 (P-MPJPE) action-wise average: 35.2 mm
+Protocol #3 (N-MPJPE) action-wise average: 43.5 mm
+Velocity      (MPJVE) action-wise average: 2.34 mm
+epoch_80
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_80.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 43.41919439281934 mm
+Protocol #2 Error (P-MPJPE): 31.953134142235655 mm
+Protocol #3 Error (N-MPJPE): 40.24225182194712 mm
+Velocity Error (MPJVE): 2.542994074467488 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 52.69327869379606 mm
+Protocol #2 Error (P-MPJPE): 40.8757233224799 mm
+Protocol #3 Error (N-MPJPE): 49.915496647830594 mm
+Velocity Error (MPJVE): 2.2111555592472683 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 48.03089882957428 mm
+Protocol #2 Error (P-MPJPE): 36.13985521349717 mm
+Protocol #3 Error (N-MPJPE): 45.577997486196644 mm
+Velocity Error (MPJVE): 2.522674422040171 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 40.51410887131458 mm
+Protocol #2 Error (P-MPJPE): 32.99827012894469 mm
+Protocol #3 Error (N-MPJPE): 39.27148621278385 mm
+Velocity Error (MPJVE): 1.9413210259115468 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 47.505315293706936 mm
+Protocol #2 Error (P-MPJPE): 36.68798671544668 mm
+Protocol #3 Error (N-MPJPE): 44.64014764486114 mm
+Velocity Error (MPJVE): 3.309520048853626 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 43.284262655879715 mm
+Protocol #2 Error (P-MPJPE): 32.421295976954376 mm
+Protocol #3 Error (N-MPJPE): 41.80441774930932 mm
+Velocity Error (MPJVE): 2.616674720963687 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 47.724491105444976 mm
+Protocol #2 Error (P-MPJPE): 33.212808852529164 mm
+Protocol #3 Error (N-MPJPE): 45.45316407183879 mm
+Velocity Error (MPJVE): 2.339575958588943 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.44957769687296 mm
+Protocol #2 Error (P-MPJPE): 28.12683141353439 mm
+Protocol #3 Error (N-MPJPE): 35.42313957376841 mm
+Velocity Error (MPJVE): 3.070765455254568 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 46.19153507426819 mm
+Protocol #2 Error (P-MPJPE): 35.276039802933575 mm
+Protocol #3 Error (N-MPJPE): 44.289990405204044 mm
+Velocity Error (MPJVE): 3.0169823544567107 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 46.11613183260929 mm
+Protocol #2 Error (P-MPJPE): 34.54970703739899 mm
+Protocol #3 Error (N-MPJPE): 43.00051900148902 mm
+Velocity Error (MPJVE): 1.7941627386475738 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 47.544165285366766 mm
+Protocol #2 Error (P-MPJPE): 34.82168234358177 mm
+Protocol #3 Error (N-MPJPE): 45.30124733086377 mm
+Velocity Error (MPJVE): 2.2071341544815444 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 50.10232998868263 mm
+Protocol #2 Error (P-MPJPE): 40.1027629592952 mm
+Protocol #3 Error (N-MPJPE): 47.88127196530003 mm
+Velocity Error (MPJVE): 1.3231874349316082 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 47.00446842982131 mm
+Protocol #2 Error (P-MPJPE): 36.78496650482897 mm
+Protocol #3 Error (N-MPJPE): 44.219680526065815 mm
+Velocity Error (MPJVE): 1.820700627492195 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 37.96359877068048 mm
+Protocol #2 Error (P-MPJPE): 29.817903944386714 mm
+Protocol #3 Error (N-MPJPE): 35.72140888924209 mm
+Velocity Error (MPJVE): 2.6893142663363006 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 55.49154145563297 mm
+Protocol #2 Error (P-MPJPE): 45.24792456229635 mm
+Protocol #3 Error (N-MPJPE): 52.99819592013553 mm
+Velocity Error (MPJVE): 1.776742686596712 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 46.1 mm
+Protocol #2 (P-MPJPE) action-wise average: 35.3 mm
+Protocol #3 (N-MPJPE) action-wise average: 43.7 mm
+Velocity      (MPJVE) action-wise average: 2.35 mm
+epoch_90
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_90.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 42.881470845694516 mm
+Protocol #2 Error (P-MPJPE): 32.072609961379634 mm
+Protocol #3 Error (N-MPJPE): 40.24025004140585 mm
+Velocity Error (MPJVE): 2.5529078039921007 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 52.175985214695594 mm
+Protocol #2 Error (P-MPJPE): 40.693239826648046 mm
+Protocol #3 Error (N-MPJPE): 49.723434150549316 mm
+Velocity Error (MPJVE): 2.204691024621349 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 47.461029692666 mm
+Protocol #2 Error (P-MPJPE): 36.20206695685534 mm
+Protocol #3 Error (N-MPJPE): 45.362166925266465 mm
+Velocity Error (MPJVE): 2.518006488449328 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 40.54794659299966 mm
+Protocol #2 Error (P-MPJPE): 33.37632326457175 mm
+Protocol #3 Error (N-MPJPE): 39.464113662093105 mm
+Velocity Error (MPJVE): 1.9478970044888386 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 47.14231155423153 mm
+Protocol #2 Error (P-MPJPE): 36.776204895804106 mm
+Protocol #3 Error (N-MPJPE): 44.478249321799616 mm
+Velocity Error (MPJVE): 3.3006140815539373 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 42.67685135891763 mm
+Protocol #2 Error (P-MPJPE): 32.50031228556076 mm
+Protocol #3 Error (N-MPJPE): 41.36511141921513 mm
+Velocity Error (MPJVE): 2.627194557279357 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 46.72287630949639 mm
+Protocol #2 Error (P-MPJPE): 32.92834932364174 mm
+Protocol #3 Error (N-MPJPE): 44.748323915193076 mm
+Velocity Error (MPJVE): 2.3439798608452667 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.05888475836782 mm
+Protocol #2 Error (P-MPJPE): 28.147928221578958 mm
+Protocol #3 Error (N-MPJPE): 35.19184486887037 mm
+Velocity Error (MPJVE): 3.0590167132486576 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 45.74083684870798 mm
+Protocol #2 Error (P-MPJPE): 35.39523308202693 mm
+Protocol #3 Error (N-MPJPE): 44.23928021863851 mm
+Velocity Error (MPJVE): 3.0133556182150514 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 45.642516161301195 mm
+Protocol #2 Error (P-MPJPE): 34.48448706963706 mm
+Protocol #3 Error (N-MPJPE): 42.77676792164159 mm
+Velocity Error (MPJVE): 1.7920124449307322 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 46.78831645125236 mm
+Protocol #2 Error (P-MPJPE): 34.76806129906433 mm
+Protocol #3 Error (N-MPJPE): 44.8110174931178 mm
+Velocity Error (MPJVE): 2.206237181154015 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 50.010761707537974 mm
+Protocol #2 Error (P-MPJPE): 40.30651573571049 mm
+Protocol #3 Error (N-MPJPE): 48.03249968367698 mm
+Velocity Error (MPJVE): 1.3231748442630753 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 46.61193569829207 mm
+Protocol #2 Error (P-MPJPE): 36.87576131322764 mm
+Protocol #3 Error (N-MPJPE): 44.03570931251129 mm
+Velocity Error (MPJVE): 1.8245911222977391 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 37.92877944832461 mm
+Protocol #2 Error (P-MPJPE): 29.90493177328224 mm
+Protocol #3 Error (N-MPJPE): 35.77191679812643 mm
+Velocity Error (MPJVE): 2.6935843807680597 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 55.74387755708228 mm
+Protocol #2 Error (P-MPJPE): 45.645580356045194 mm
+Protocol #3 Error (N-MPJPE): 53.3473606114842 mm
+Velocity Error (MPJVE): 1.7857538370560113 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 45.7 mm
+Protocol #2 (P-MPJPE) action-wise average: 35.3 mm
+Protocol #3 (N-MPJPE) action-wise average: 43.6 mm
+Velocity      (MPJVE) action-wise average: 2.35 mm
+epoch_100
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_100.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 43.35330296784247 mm
+Protocol #2 Error (P-MPJPE): 32.10526222564123 mm
+Protocol #3 Error (N-MPJPE): 40.32085124720116 mm
+Velocity Error (MPJVE): 2.5647300673674507 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 52.708414897429385 mm
+Protocol #2 Error (P-MPJPE): 40.83942037258719 mm
+Protocol #3 Error (N-MPJPE): 50.02756133563766 mm
+Velocity Error (MPJVE): 2.222616058124082 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 47.88325379594087 mm
+Protocol #2 Error (P-MPJPE): 36.277302182945505 mm
+Protocol #3 Error (N-MPJPE): 45.583885833857615 mm
+Velocity Error (MPJVE): 2.5340375336836662 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 41.00455850051168 mm
+Protocol #2 Error (P-MPJPE): 33.62105126420937 mm
+Protocol #3 Error (N-MPJPE): 39.84628091277685 mm
+Velocity Error (MPJVE): 1.9678232786908574 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 47.64687243852724 mm
+Protocol #2 Error (P-MPJPE): 36.89640964599355 mm
+Protocol #3 Error (N-MPJPE): 44.77106964591008 mm
+Velocity Error (MPJVE): 3.323581713200307 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 43.20159953109204 mm
+Protocol #2 Error (P-MPJPE): 32.68667494306746 mm
+Protocol #3 Error (N-MPJPE): 41.80056311605852 mm
+Velocity Error (MPJVE): 2.6402112232233144 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 47.16221719210055 mm
+Protocol #2 Error (P-MPJPE): 33.01285002564963 mm
+Protocol #3 Error (N-MPJPE): 45.0171213385395 mm
+Velocity Error (MPJVE): 2.356543045342815 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.649281543884236 mm
+Protocol #2 Error (P-MPJPE): 28.357619999097267 mm
+Protocol #3 Error (N-MPJPE): 35.624068451827895 mm
+Velocity Error (MPJVE): 3.0914903171972163 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 46.15764670349213 mm
+Protocol #2 Error (P-MPJPE): 35.487948672199465 mm
+Protocol #3 Error (N-MPJPE): 44.44482263990671 mm
+Velocity Error (MPJVE): 3.0342358981691095 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 45.82063133157912 mm
+Protocol #2 Error (P-MPJPE): 34.50070092588187 mm
+Protocol #3 Error (N-MPJPE): 42.81551173119418 mm
+Velocity Error (MPJVE): 1.808394314363313 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 47.68940555897911 mm
+Protocol #2 Error (P-MPJPE): 35.12041709692187 mm
+Protocol #3 Error (N-MPJPE): 45.51674697127846 mm
+Velocity Error (MPJVE): 2.227226639795752 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 50.35989457407106 mm
+Protocol #2 Error (P-MPJPE): 40.44761095805175 mm
+Protocol #3 Error (N-MPJPE): 48.351469602406596 mm
+Velocity Error (MPJVE): 1.3380282320207193 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 46.93388395064537 mm
+Protocol #2 Error (P-MPJPE): 36.84248416589343 mm
+Protocol #3 Error (N-MPJPE): 44.1965485433726 mm
+Velocity Error (MPJVE): 1.8403680318010942 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 38.23941082125104 mm
+Protocol #2 Error (P-MPJPE): 29.991312830329754 mm
+Protocol #3 Error (N-MPJPE): 35.97982906382044 mm
+Velocity Error (MPJVE): 2.717278480555485 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 56.33878408690959 mm
+Protocol #2 Error (P-MPJPE): 45.95088002656173 mm
+Protocol #3 Error (N-MPJPE): 53.884024415001974 mm
+Velocity Error (MPJVE): 1.8000392723271448 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 46.1 mm
+Protocol #2 (P-MPJPE) action-wise average: 35.5 mm
+Protocol #3 (N-MPJPE) action-wise average: 43.9 mm
+Velocity      (MPJVE) action-wise average: 2.36 mm
+epoch_110
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_110.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 43.25600699169906 mm
+Protocol #2 Error (P-MPJPE): 32.0235062872649 mm
+Protocol #3 Error (N-MPJPE): 40.28605192897449 mm
+Velocity Error (MPJVE): 2.5857433938852368 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 52.5678156976719 mm
+Protocol #2 Error (P-MPJPE): 40.691310833214615 mm
+Protocol #3 Error (N-MPJPE): 49.902262088638125 mm
+Velocity Error (MPJVE): 2.23546801587582 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 47.577203003818724 mm
+Protocol #2 Error (P-MPJPE): 36.18588795411461 mm
+Protocol #3 Error (N-MPJPE): 45.37448473576238 mm
+Velocity Error (MPJVE): 2.5543981537860247 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 41.04711964572539 mm
+Protocol #2 Error (P-MPJPE): 33.37419539947039 mm
+Protocol #3 Error (N-MPJPE): 39.859756166321056 mm
+Velocity Error (MPJVE): 1.98151308864074 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 47.635409173541454 mm
+Protocol #2 Error (P-MPJPE): 36.99563936553601 mm
+Protocol #3 Error (N-MPJPE): 44.832291481005626 mm
+Velocity Error (MPJVE): 3.3477687389613404 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 43.126273099151454 mm
+Protocol #2 Error (P-MPJPE): 32.729986818417295 mm
+Protocol #3 Error (N-MPJPE): 41.74197823782075 mm
+Velocity Error (MPJVE): 2.660210388494291 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 47.00706639911576 mm
+Protocol #2 Error (P-MPJPE): 33.0240134754057 mm
+Protocol #3 Error (N-MPJPE): 44.86758480192629 mm
+Velocity Error (MPJVE): 2.3728209128850852 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.28824222485594 mm
+Protocol #2 Error (P-MPJPE): 28.12362856286623 mm
+Protocol #3 Error (N-MPJPE): 35.303473721465586 mm
+Velocity Error (MPJVE): 3.107574526423921 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 46.147595956943945 mm
+Protocol #2 Error (P-MPJPE): 35.398057014850984 mm
+Protocol #3 Error (N-MPJPE): 44.40604845389399 mm
+Velocity Error (MPJVE): 3.0565242362262155 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 45.89366169670028 mm
+Protocol #2 Error (P-MPJPE): 34.54647047339971 mm
+Protocol #3 Error (N-MPJPE): 42.985955064946516 mm
+Velocity Error (MPJVE): 1.8224159379457274 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 47.23465588229506 mm
+Protocol #2 Error (P-MPJPE): 34.86851328374303 mm
+Protocol #3 Error (N-MPJPE): 45.12000362926568 mm
+Velocity Error (MPJVE): 2.2415003907094837 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 50.10876510329659 mm
+Protocol #2 Error (P-MPJPE): 40.20452129603067 mm
+Protocol #3 Error (N-MPJPE): 48.09308429096478 mm
+Velocity Error (MPJVE): 1.34268304092745 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 46.754023977174434 mm
+Protocol #2 Error (P-MPJPE): 36.8278111077814 mm
+Protocol #3 Error (N-MPJPE): 44.09219449373125 mm
+Velocity Error (MPJVE): 1.8545784608874452 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 37.84018285012112 mm
+Protocol #2 Error (P-MPJPE): 29.815752748422756 mm
+Protocol #3 Error (N-MPJPE): 35.70201185453177 mm
+Velocity Error (MPJVE): 2.7411462470861756 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 56.24351169522295 mm
+Protocol #2 Error (P-MPJPE): 46.004125074937434 mm
+Protocol #3 Error (N-MPJPE): 53.8137651935878 mm
+Velocity Error (MPJVE): 1.8005197906430466 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 46.0 mm
+Protocol #2 (P-MPJPE) action-wise average: 35.4 mm
+Protocol #3 (N-MPJPE) action-wise average: 43.8 mm
+Velocity      (MPJVE) action-wise average: 2.38 mm
+epoch_120
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_120.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 43.32006729934018 mm
+Protocol #2 Error (P-MPJPE): 32.0957135006676 mm
+Protocol #3 Error (N-MPJPE): 40.40608724737936 mm
+Velocity Error (MPJVE): 2.581587968865601 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 52.28435309911286 mm
+Protocol #2 Error (P-MPJPE): 40.46859145748949 mm
+Protocol #3 Error (N-MPJPE): 49.59537176755835 mm
+Velocity Error (MPJVE): 2.2297937643830505 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 47.95107559471613 mm
+Protocol #2 Error (P-MPJPE): 36.233713654906204 mm
+Protocol #3 Error (N-MPJPE): 45.64967931806484 mm
+Velocity Error (MPJVE): 2.551084853799696 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 40.990124228373936 mm
+Protocol #2 Error (P-MPJPE): 33.43376589241857 mm
+Protocol #3 Error (N-MPJPE): 39.82740307773231 mm
+Velocity Error (MPJVE): 1.9748911961513502 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 47.82433273826677 mm
+Protocol #2 Error (P-MPJPE): 37.14497632598699 mm
+Protocol #3 Error (N-MPJPE): 44.968156572173356 mm
+Velocity Error (MPJVE): 3.3445464402851544 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 43.19540522158072 mm
+Protocol #2 Error (P-MPJPE): 32.80295309968242 mm
+Protocol #3 Error (N-MPJPE): 41.81686031858726 mm
+Velocity Error (MPJVE): 2.659568265328206 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 47.33122150192469 mm
+Protocol #2 Error (P-MPJPE): 33.102338951452474 mm
+Protocol #3 Error (N-MPJPE): 45.22823994990187 mm
+Velocity Error (MPJVE): 2.369056337071266 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.403300688426356 mm
+Protocol #2 Error (P-MPJPE): 28.32321510746965 mm
+Protocol #3 Error (N-MPJPE): 35.38780512419076 mm
+Velocity Error (MPJVE): 3.0958549146471848 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 46.193933311225955 mm
+Protocol #2 Error (P-MPJPE): 35.52475961575847 mm
+Protocol #3 Error (N-MPJPE): 44.49078412535662 mm
+Velocity Error (MPJVE): 3.054023778075825 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 46.11807054732563 mm
+Protocol #2 Error (P-MPJPE): 34.58238254392775 mm
+Protocol #3 Error (N-MPJPE): 43.16389762160569 mm
+Velocity Error (MPJVE): 1.8173995763230641 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 47.58743703492834 mm
+Protocol #2 Error (P-MPJPE): 35.040020635034736 mm
+Protocol #3 Error (N-MPJPE): 45.491199648433174 mm
+Velocity Error (MPJVE): 2.2378249576154126 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 50.55536465536759 mm
+Protocol #2 Error (P-MPJPE): 40.50370296411573 mm
+Protocol #3 Error (N-MPJPE): 48.522564250473046 mm
+Velocity Error (MPJVE): 1.3461739199745864 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 47.06380760823194 mm
+Protocol #2 Error (P-MPJPE): 37.05834363935105 mm
+Protocol #3 Error (N-MPJPE): 44.42991702862981 mm
+Velocity Error (MPJVE): 1.8533140008627593 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 37.921747974419226 mm
+Protocol #2 Error (P-MPJPE): 29.866917814092364 mm
+Protocol #3 Error (N-MPJPE): 35.76595184091804 mm
+Velocity Error (MPJVE): 2.721619385158214 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 56.82973436375827 mm
+Protocol #2 Error (P-MPJPE): 46.26546135243123 mm
+Protocol #3 Error (N-MPJPE): 54.3729769031992 mm
+Velocity Error (MPJVE): 1.8069236458535973 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 46.2 mm
+Protocol #2 (P-MPJPE) action-wise average: 35.5 mm
+Protocol #3 (N-MPJPE) action-wise average: 43.9 mm
+Velocity      (MPJVE) action-wise average: 2.38 mm
+epoch_130
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/epoch_130.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 43.33340803005362 mm
+Protocol #2 Error (P-MPJPE): 32.06589051150321 mm
+Protocol #3 Error (N-MPJPE): 40.29130205820467 mm
+Velocity Error (MPJVE): 2.591435879084308 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 52.458354282366955 mm
+Protocol #2 Error (P-MPJPE): 40.55478942680896 mm
+Protocol #3 Error (N-MPJPE): 49.8176313170561 mm
+Velocity Error (MPJVE): 2.2338197674884337 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 47.77323921729406 mm
+Protocol #2 Error (P-MPJPE): 36.186573591289026 mm
+Protocol #3 Error (N-MPJPE): 45.444834129566495 mm
+Velocity Error (MPJVE): 2.5604700814438774 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 40.86020808679075 mm
+Protocol #2 Error (P-MPJPE): 33.347885323880014 mm
+Protocol #3 Error (N-MPJPE): 39.700450559533465 mm
+Velocity Error (MPJVE): 1.9802408913064473 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 47.666363959575 mm
+Protocol #2 Error (P-MPJPE): 37.1551606608023 mm
+Protocol #3 Error (N-MPJPE): 44.87204563213273 mm
+Velocity Error (MPJVE): 3.350671871040196 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 43.05045643086887 mm
+Protocol #2 Error (P-MPJPE): 32.728070683941155 mm
+Protocol #3 Error (N-MPJPE): 41.72274934522401 mm
+Velocity Error (MPJVE): 2.6591809475560684 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 47.04418268773017 mm
+Protocol #2 Error (P-MPJPE): 32.968151026959816 mm
+Protocol #3 Error (N-MPJPE): 44.91216643983799 mm
+Velocity Error (MPJVE): 2.366817682726982 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.26178223409518 mm
+Protocol #2 Error (P-MPJPE): 28.197619778296605 mm
+Protocol #3 Error (N-MPJPE): 35.28735315178441 mm
+Velocity Error (MPJVE): 3.0958244411147238 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 46.11279840076982 mm
+Protocol #2 Error (P-MPJPE): 35.448450499467455 mm
+Protocol #3 Error (N-MPJPE): 44.37534637299884 mm
+Velocity Error (MPJVE): 3.0634610735082015 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 46.011692019079305 mm
+Protocol #2 Error (P-MPJPE): 34.596925686246244 mm
+Protocol #3 Error (N-MPJPE): 43.06601600776207 mm
+Velocity Error (MPJVE): 1.8207275061877595 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 47.44565764514105 mm
+Protocol #2 Error (P-MPJPE): 34.954569032823066 mm
+Protocol #3 Error (N-MPJPE): 45.31444865815104 mm
+Velocity Error (MPJVE): 2.2385488617099734 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 50.18068204209991 mm
+Protocol #2 Error (P-MPJPE): 40.346054097078685 mm
+Protocol #3 Error (N-MPJPE): 48.24509837912825 mm
+Velocity Error (MPJVE): 1.3501333561618392 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 47.06838837585225 mm
+Protocol #2 Error (P-MPJPE): 37.04546276011347 mm
+Protocol #3 Error (N-MPJPE): 44.41592183728833 mm
+Velocity Error (MPJVE): 1.856982323759791 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 37.659886616036275 mm
+Protocol #2 Error (P-MPJPE): 29.760782606757356 mm
+Protocol #3 Error (N-MPJPE): 35.532185826476216 mm
+Velocity Error (MPJVE): 2.730316382282802 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 56.363076246606816 mm
+Protocol #2 Error (P-MPJPE): 45.92162452221396 mm
+Protocol #3 Error (N-MPJPE): 53.92307712552395 mm
+Velocity Error (MPJVE): 1.8095946926080284 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 46.0 mm
+Protocol #2 (P-MPJPE) action-wise average: 35.4 mm
+Protocol #3 (N-MPJPE) action-wise average: 43.8 mm
+Velocity      (MPJVE) action-wise average: 2.38 mm
+best_epoch
+--------
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 9 frames
+INFO: Trainable parameter count: 14345565
+Loading checkpoint checkpoint-20231020/best_epoch.bin
+INFO: Testing on 543344 frames
+Evaluating...
+----Directions----
+Protocol #1 Error (MPJPE): 42.67995811342534 mm
+Protocol #2 Error (P-MPJPE): 31.755859391227872 mm
+Protocol #3 Error (N-MPJPE): 39.49657047994291 mm
+Velocity Error (MPJVE): 2.476865591369124 mm
+----------
+----Photo----
+Protocol #1 Error (MPJPE): 51.107525225286594 mm
+Protocol #2 Error (P-MPJPE): 39.85698670809542 mm
+Protocol #3 Error (N-MPJPE): 48.39758637385369 mm
+Velocity Error (MPJVE): 2.174528118734036 mm
+----------
+----Discussion----
+Protocol #1 Error (MPJPE): 47.26578258380389 mm
+Protocol #2 Error (P-MPJPE): 35.97599924663491 mm
+Protocol #3 Error (N-MPJPE): 45.01804795631571 mm
+Velocity Error (MPJVE): 2.497148413187942 mm
+----------
+----Eating----
+Protocol #1 Error (MPJPE): 38.53824590866845 mm
+Protocol #2 Error (P-MPJPE): 30.74090517491559 mm
+Protocol #3 Error (N-MPJPE): 37.3786472160738 mm
+Velocity Error (MPJVE): 1.8702530082515127 mm
+----------
+----WalkDog----
+Protocol #1 Error (MPJPE): 46.39757978819403 mm
+Protocol #2 Error (P-MPJPE): 36.32592200314749 mm
+Protocol #3 Error (N-MPJPE): 44.04228174868906 mm
+Velocity Error (MPJVE): 3.3005033042972194 mm
+----------
+----Purchases----
+Protocol #1 Error (MPJPE): 41.37046614345383 mm
+Protocol #2 Error (P-MPJPE): 31.043243320537872 mm
+Protocol #3 Error (N-MPJPE): 40.012511239460316 mm
+Velocity Error (MPJVE): 2.5750032157847356 mm
+----------
+----Posing----
+Protocol #1 Error (MPJPE): 46.97936040573259 mm
+Protocol #2 Error (P-MPJPE): 33.334958258964384 mm
+Protocol #3 Error (N-MPJPE): 45.16859314707586 mm
+Velocity Error (MPJVE): 2.314231923031634 mm
+----------
+----Walking----
+Protocol #1 Error (MPJPE): 37.5351371296298 mm
+Protocol #2 Error (P-MPJPE): 28.552571618257364 mm
+Protocol #3 Error (N-MPJPE): 35.969941315883766 mm
+Velocity Error (MPJVE): 3.039759576785673 mm
+----------
+----Greeting----
+Protocol #1 Error (MPJPE): 45.05416831737604 mm
+Protocol #2 Error (P-MPJPE): 34.751635422217014 mm
+Protocol #3 Error (N-MPJPE): 43.58239148848849 mm
+Velocity Error (MPJVE): 2.9886110079208636 mm
+----------
+----Phoning----
+Protocol #1 Error (MPJPE): 45.20200401164125 mm
+Protocol #2 Error (P-MPJPE): 33.992645916274085 mm
+Protocol #3 Error (N-MPJPE): 42.5949489852968 mm
+Velocity Error (MPJVE): 1.7630406684512379 mm
+----------
+----Waiting----
+Protocol #1 Error (MPJPE): 46.61980396033927 mm
+Protocol #2 Error (P-MPJPE): 34.2452364154955 mm
+Protocol #3 Error (N-MPJPE): 44.71350925115244 mm
+Velocity Error (MPJVE): 2.1878396099569173 mm
+----------
+----Sitting----
+Protocol #1 Error (MPJPE): 48.62604836914539 mm
+Protocol #2 Error (P-MPJPE): 38.317752773078524 mm
+Protocol #3 Error (N-MPJPE): 46.60216066523852 mm
+Velocity Error (MPJVE): 1.2868597008752134 mm
+----------
+----Smoking----
+Protocol #1 Error (MPJPE): 45.085801531733466 mm
+Protocol #2 Error (P-MPJPE): 35.41562792792496 mm
+Protocol #3 Error (N-MPJPE): 42.5799844920912 mm
+Velocity Error (MPJVE): 1.7638346928997384 mm
+----------
+----WalkTogether----
+Protocol #1 Error (MPJPE): 38.278275048976745 mm
+Protocol #2 Error (P-MPJPE): 29.732563869765393 mm
+Protocol #3 Error (N-MPJPE): 35.928941627816585 mm
+Velocity Error (MPJVE): 2.6888280730952814 mm
+----------
+----SittingDown----
+Protocol #1 Error (MPJPE): 53.48767014248305 mm
+Protocol #2 Error (P-MPJPE): 42.86934777377941 mm
+Protocol #3 Error (N-MPJPE): 50.955845006396046 mm
+Velocity Error (MPJVE): 1.7431439032617224 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 44.9 mm
+Protocol #2 (P-MPJPE) action-wise average: 34.5 mm
+Protocol #3 (N-MPJPE) action-wise average: 42.8 mm
+Velocity      (MPJVE) action-wise average: 2.31 mm
+====================END===================

@@ -1,3 +1,4 @@
+
 ## Our PoseFormer model was revised from https://github.com/rwightman/pytorch-image-models/blob/master/timm/models/vision_transformer.py
 
 import math
@@ -12,7 +13,6 @@ import torch
 import torch.nn as nn
 import torch_dct as dct
 import torch.nn.functional as F
-from pytorch_wavelets import DWTForward, DWTInverse
 
 from timm.data import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.models.helpers import load_pretrained
@@ -52,31 +52,46 @@ class FreqMlp(nn.Module):
         self.fc2 = nn.Linear(hidden_features, out_features)
         self.drop = nn.Dropout(drop)
 
-        # Initialize wavelet transforms
-        self.dwt = DWTForward(J=1, wave='haar')
-        self.idwt = DWTInverse(wave='haar')
-
     def forward(self, x):
         b, f, _ = x.shape
-        # print("----------------------------------------------------------------------------------------------")
-        # print("x.shape: ", x.shape)
-
-        # Reshape x to fit the expected input shape for DWTForward
-        x_reshaped = x.unsqueeze(1)  # Shape: [batch, 1, features, length]
-        # print("x_reshaped.shape: ", x_reshaped.shape)
+        print("------------------------------------------------------------------------------------------")
+        print("A new loop")
+        print("x.shape: ", x.shape)
 
         # Use wavelet transform to replace DCT
-        coeffs = self.dwt(x_reshaped)
-        # print("coeffs's length: ", len(coeffs))
+        coeffs = pywt.dwt(x.cpu().detach().numpy(), 'haar')  # Using 'haar' wavelet, other wavelets can also be chosen
+        print("coeffs's length: ", len(coeffs))
 
-        x_low, x_high = coeffs
-        # print("x_low.shape: 1", x_low.shape)
+        x_low, x_high = coeffs  # Unpack low-frequency and high-frequency components
+        print("x_low.shape 1: ", x_low.shape)
+        print("x_high.shape: ", x_high.shape)
 
-        original_2 = x_low.shape[2]
-        original_3 = x_low.shape[3]
+        # x_low = torch.tensor(x_low).to(x.device).float()  # Convert to tensor and move to the original device
+        # print("x_low.shape 2: ", x_low.shape)
+        #
+        # # Convert it to NumPy array
+        # x_low_np = x_low.cpu().detach().numpy()
+        # print("x_low_np.shape: ", x_low_np.shape)
 
-        x_low = F.interpolate(x_low, size=(x_reshaped.shape[2], x_reshaped.shape[3]), mode='bilinear', align_corners=True)
-        # print("x_low.shape: 2", x_low.shape)
+        # The above code are redundant
+        x_low_np = x_low
+        print("x_low_np.shape: ", x_low_np.shape)
+
+        # Initialize an empty array with the target size
+        x_interp_np = np.zeros(x.shape)
+
+        # Perform interpolation
+        for i in range(x_low_np.shape[0]):
+            for j in range(x_low_np.shape[1]):
+                f = interp1d(np.linspace(0, 1, x_low.shape[-1]), x_low_np[i, j, :], kind='linear')
+                x_interp_np[i, j, :] = f(np.linspace(0, 1, x.shape[-1]))
+        print("x_interp_np.shape: ", x_interp_np.shape)
+
+        # Convert the result back to PyTorch tensor and move to the same device as `x`
+        x_low = torch.tensor(x_interp_np).float().to(x.device)
+        print("x_low.shape 3: ", x_low.shape)
+
+        # print(f"Before: x_low={x_low.shape}, x={x.shape}")
 
         # Perform the original MLP operations
         x_low = self.fc1(x_low)
@@ -85,23 +100,18 @@ class FreqMlp(nn.Module):
         x_low = self.fc2(x_low)
         x_low = self.drop(x_low)
 
-        x_low = F.interpolate(x_low, size=(original_2, original_3), mode='bilinear', align_corners=True)
-        # print("x_low.shape: 3", x_low.shape)
+        # print(f"Mid: x_low={x_low.shape}, x={x.shape}")
 
         # Use inverse wavelet transform
-        x_reconstructed = self.idwt((x_low, x_high))
-        # print("x_reconstructed.shape: 1", x_reconstructed.shape)
+        x_reconstructed = pywt.idwt(x_low.cpu().detach().numpy(), None,
+                                    'haar')  # Here we only use the low-frequency component
+        x_reconstructed = torch.tensor(x_reconstructed).to(x.device).float()
 
-        # Remove the singleton dimension and adjust shape
-        x_reconstructed = x_reconstructed.squeeze(1)
-        # print("x_reconstructed.shape: 2", x_reconstructed.shape)
+        # Adjust size to be consistent with original x
+        if x_reconstructed.shape[-1] > x.shape[-1]:
+            x_reconstructed = x_reconstructed[..., :x.shape[-1]]
 
-        x_reconstructed = x_reconstructed[:, :-1, :]
-        # print("x_reconstructed.shape: 3", x_reconstructed.shape)
-
-        # # Adjust size to be consistent with original x
-        # if x_reconstructed.shape[-1] > x.shape[-1]:
-        #     x_reconstructed = x_reconstructed[..., :x.shape[-1]]
+        # print(f"After: x_reconstructed={x_reconstructed.shape}, x={x.shape}")
 
         return x_reconstructed
 
